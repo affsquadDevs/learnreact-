@@ -1,0 +1,121 @@
+.section {
+  background: var(--c-page);
+  padding: 100px 0 90px;
+}
+
+.head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.head strong { color: var(--c-blue); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  padding: 26px 22px;
+  border: 1px solid rgba(16, 22, 40, 0.04);
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sh-md);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--accent);
+}
+
+.badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--c-muted);
+  background: var(--c-line-2);
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.card p {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: var(--c-muted);
+  min-height: 56px;
+}
+
+.track {
+  margin-top: 14px;
+  height: 7px;
+  border-radius: 6px;
+  background: var(--c-line);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--accent);
+}
+
+.pctLabel {
+  display: block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--c-muted);
+}
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 44px;
+}
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .card p { min-height: auto; }
+}

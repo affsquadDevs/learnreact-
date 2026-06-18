@@ -1,0 +1,40 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--c-blue), #5b8bff);
+  box-shadow: 0 8px 18px rgba(45, 107, 255, 0.35);
+}
+
+.mark svg {
+  animation: spin 16s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+}
+
+.accent {
+  color: var(--c-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark svg { animation: none; }
+}

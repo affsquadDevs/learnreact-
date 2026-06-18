@@ -1,0 +1,211 @@
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr);
+  align-items: start;
+  margin: 14px 0;
+}
+
+.left .card { grid-column: 1; }
+.left .node { grid-column: 2; }
+.right .card { grid-column: 3; }
+.right .node { grid-column: 2; }
+
+/* Node on the central spine */
+.node {
+  grid-row: 1;
+  justify-self: center;
+  margin-top: 22px;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--c-line);
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nodeInner {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c-muted-2);
+}
+
+.node.progress {
+  border-color: var(--accent);
+}
+.node.progress .nodeInner { color: var(--accent); }
+
+.node.complete {
+  border-color: var(--c-green);
+  background: var(--c-green);
+  box-shadow: 0 0 0 5px rgba(47, 204, 113, 0.18);
+}
+.node.complete .nodeInner { color: #fff; }
+
+/* Connector from node to card */
+.connector {
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  width: 20px;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+.right .connector { left: 100%; }
+.left .connector { right: 100%; }
+
+/* Card */
+.card {
+  grid-row: 1;
+  background: #fff;
+  border: 1px solid rgba(16, 22, 40, 0.06);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-sm);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--accent);
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
+}
+
+.head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px 14px;
+  text-align: left;
+}
+
+.headLeft h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--c-muted);
+}
+
+.headRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ring {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(closest-side, #fff 72%, transparent 73%),
+    conic-gradient(var(--ring) calc(var(--pct) * 1%), var(--c-line) 0);
+  font-size: 0;
+}
+.ring span {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--c-ink-2);
+}
+
+.chevron {
+  font-size: 18px;
+  color: var(--c-muted);
+  line-height: 1;
+}
+
+.track {
+  height: 5px;
+  background: var(--c-line);
+  margin: 0 18px 16px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Expandable body */
+.body {
+  overflow: hidden;
+}
+.bodyInner {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--c-line-2);
+  padding-top: 14px;
+}
+
+.markAll {
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  margin-bottom: 12px;
+  transition: filter 0.18s ease;
+}
+.markAll:hover { filter: brightness(0.96); }
+
+.concepts li { margin-bottom: 2px; }
+
+.concept {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--c-ink-2);
+  transition: background 0.16s ease;
+}
+.concept:hover { background: var(--c-line-2); }
+
+.check {
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 19px;
+  height: 19px;
+  border-radius: 6px;
+  border: 1.8px solid #cfd4dd;
+  display: grid;
+  place-items: center;
+  transition: all 0.18s ease;
+}
+
+.conceptDone {
+  color: var(--c-muted-2);
+}
+.conceptDone span:last-child {
+  text-decoration: line-through;
+}
+
+@media (max-width: 860px) {
+  .row { grid-template-columns: 54px 1fr; }
+  .left .card, .right .card { grid-column: 2; }
+  .left .node, .right .node { grid-column: 1; }
+  .left .connector, .right .connector { left: 100%; right: auto; }
+  .connector { width: 12px; }
+}
