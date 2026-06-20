@@ -35,6 +35,14 @@
   color: var(--c-blue);
 }
 
+/* High-contrast variant for dark backgrounds (e.g. the footer). */
+.onDark .word {
+  color: #fff;
+}
+.onDark .accent {
+  color: var(--c-cyan);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mark svg { animation: none; }
 }

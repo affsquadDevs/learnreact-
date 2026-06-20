@@ -783,6 +783,343 @@ function FetchingData() {
   );
 }
 
+function LearnJavaScriptBeforeReact() {
+  return (
+    <>
+      <p>
+        It's the most common beginner question: should you learn JavaScript first, or dive straight
+        into React? The honest answer — you need a solid base of JavaScript, but not all of it, and
+        not for months before you touch React.
+      </p>
+
+      <h2>Why JavaScript matters so much</h2>
+      <p>
+        React is "just JavaScript." JSX compiles to function calls, props are function arguments, and
+        state updates are plain values. When people say "React is confusing," it's very often
+        JavaScript that's actually confusing them — not React itself.
+      </p>
+
+      <h2>The JavaScript you actually need first</h2>
+      <ul>
+        <li>Variables, functions, and arrow functions.</li>
+        <li>Arrays and objects — especially <code>map</code>, <code>filter</code>, and the spread operator.</li>
+        <li>Destructuring (you'll use it constantly with props and state).</li>
+        <li>Template literals and ternary expressions.</li>
+        <li>Promises and <code>async/await</code> for fetching data.</li>
+        <li>How modules (<code>import</code> / <code>export</code>) work.</li>
+      </ul>
+      <p>
+        That's most of it. Notice what's <em>not</em> on the list: classes, prototypes, and a lot of
+        advanced JavaScript you can comfortably pick up later, as you need it.
+      </p>
+
+      <h2>A practical approach</h2>
+      <p>
+        Spend a few focused weeks on the essentials above, building tiny plain-JavaScript exercises as
+        you go. Once <code>array.map()</code> and destructuring feel natural, start React — you'll
+        learn the rest of JavaScript in context, which sticks better anyway.
+      </p>
+
+      <h2>Then what?</h2>
+      <p>
+        When you're ready, the <Link to="/roadmap">React roadmap</Link> takes it from there, and{' '}
+        <Link to="/blog/how-usestate-works">how useState works</Link> is a gentle first step into
+        hooks. Still deciding whether to commit? See{' '}
+        <Link to="/blog/is-react-worth-learning">is React still worth learning in 2026?</Link> — and
+        when you're set on a goal, <Link to="/blog/start-a-react-career">how to start a React career</Link>.
+      </p>
+    </>
+  );
+}
+
+function IsReactWorthLearning() {
+  return (
+    <>
+      <p>
+        With a new framework trending every month, it's fair to ask: in 2026, is React still worth
+        your time? The short answer is yes for most people — but it's worth understanding why, and
+        where the trade-offs are.
+      </p>
+
+      <h2>The case for yes</h2>
+      <ul>
+        <li><strong>Jobs.</strong> React is still one of the most in-demand front-end skills, across
+          startups and large companies alike.</li>
+        <li><strong>Ecosystem.</strong> Whatever you need — routing, data fetching, UI kits — there's a
+          mature, well-documented option.</li>
+        <li><strong>Transferable skills.</strong> The component mindset carries over to other
+          frameworks, and to React Native for mobile.</li>
+        <li><strong>Longevity.</strong> It's backed by a huge community and runs countless production
+          apps, so it isn't going anywhere soon.</li>
+      </ul>
+      <p>
+        On that last point, see <Link to="/blog/who-uses-react">who uses React and what they build</Link>.
+      </p>
+
+      <h2>The honest trade-offs</h2>
+      <p>
+        React is a library, not a full framework, so you assemble your own stack — more flexibility,
+        but also more decisions than an all-in-one option. It also evolves: patterns change and you'll
+        keep learning. For most people those are small costs against the upside.
+      </p>
+
+      <h2>Who it's a great fit for</h2>
+      <p>
+        If you want a front-end job, plan to build interactive web apps, or want one skill set that
+        also reaches mobile, React is a strong bet. If you're building a simple, mostly-static content
+        site, a lighter tool might serve you better — pick the job first, then the tool.
+      </p>
+
+      <h2>If you're in, start here</h2>
+      <p>
+        Make sure your fundamentals are ready with{' '}
+        <Link to="/blog/learn-javascript-before-react">do you need to learn JavaScript before React</Link>,
+        follow the <Link to="/roadmap">roadmap</Link>, and when you're aiming at a job, read{' '}
+        <Link to="/blog/start-a-react-career">how to start a career as a React developer</Link>.
+      </p>
+    </>
+  );
+}
+
+function StartAReactCareer() {
+  return (
+    <>
+      <p>
+        Plenty of people learn some React and then freeze: "Okay… now how do I actually get paid for
+        this?" The path from hobby projects to a first job is more concrete than it looks. Here's a
+        realistic, step-by-step version — no "grind 12 hours a day" advice.
+      </p>
+
+      <h2>1. Get genuinely comfortable with the fundamentals</h2>
+      <p>
+        Employers don't expect juniors to know everything, but they do expect you to be solid on the
+        basics: components and props, state with hooks, rendering lists, handling forms, and fetching
+        data. If any of those feel shaky, the <Link to="/roadmap">React roadmap</Link> lays them out
+        in order, and the <Link to="/blog/thinking-in-components">components guide</Link> is a good
+        place to start.
+      </p>
+
+      <h2>2. Make sure your JavaScript is solid</h2>
+      <p>
+        Weak JavaScript is the most common thing that holds juniors back. You don't need to be an
+        expert, but you should be comfortable with the essentials — see{' '}
+        <Link to="/blog/learn-javascript-before-react">do you need to learn JavaScript before React</Link>{' '}
+        for exactly what matters.
+      </p>
+
+      <h2>3. Build a few real projects</h2>
+      <p>
+        Tutorials prove you can follow along; projects prove you can build. Aim for two or three apps
+        that you designed and finished. Need ideas? See{' '}
+        <Link to="/blog/what-to-build-with-react">what to build with React</Link>, then turn the best
+        ones into a <Link to="/blog/react-developer-portfolio">portfolio that gets you hired</Link>.
+      </p>
+
+      <h2>4. Learn the tools teams actually use</h2>
+      <ul>
+        <li>Git and GitHub — non-negotiable for any team.</li>
+        <li>A component-based styling approach (CSS Modules, Tailwind, or similar).</li>
+        <li>Fetching from an API with proper loading and error states.</li>
+        <li>Basic testing, and reading other people's code.</li>
+      </ul>
+
+      <h2>5. Get your work seen</h2>
+      <p>
+        Deploy your projects (a live link beats a screenshot), write up what you built and why, and be
+        active where developers are. Contributing a small fix to an open-source project is a strong
+        signal too.
+      </p>
+
+      <h2>6. Apply before you feel ready</h2>
+      <p>
+        Job descriptions are wish lists, not requirements. If you meet most of the core points, apply.
+        Practising common interview questions — how state works, what causes re-renders, props vs
+        state — will carry you a long way.
+      </p>
+
+      <h2>The honest timeline</h2>
+      <p>
+        For most people putting in steady, consistent hours, going from zero to job-ready takes
+        several months, not weeks. That's normal. Still deciding if it's for you?{' '}
+        <Link to="/blog/is-react-worth-learning">Is React still worth learning in 2026?</Link> has the
+        straight answer.
+      </p>
+    </>
+  );
+}
+
+function ReactDeveloperPortfolio() {
+  return (
+    <>
+      <p>
+        For junior React roles, a portfolio often does more than a CV. It's proof you can actually
+        build and ship. But not all portfolios help — a wall of half-finished tutorials can hurt more
+        than it helps. Here's what to include, what to cut, and how to present it.
+      </p>
+
+      <h2>Quality over quantity</h2>
+      <p>
+        Three polished, finished projects beat ten abandoned ones. Each should run without errors, be
+        deployed to a live URL, and look intentional. One genuinely complete app says more about you
+        than a dozen "day 1" repos.
+      </p>
+
+      <h2>What makes a project impressive</h2>
+      <ul>
+        <li>It solves a real (even small) problem — not just "todo app #400".</li>
+        <li>It talks to real data, with proper loading and error states.</li>
+        <li>It handles edge cases: empty states, errors, slow networks.</li>
+        <li>It works on mobile and is reasonably accessible.</li>
+        <li>The code is clean and the README explains what it does and why.</li>
+      </ul>
+      <p>
+        Not sure what to build? <Link to="/blog/what-to-build-with-react">What to build with React</Link>{' '}
+        has eight ideas with the concepts each one demonstrates.
+      </p>
+
+      <h2>Show your thinking, not just the result</h2>
+      <p>
+        A short write-up for each project — the problem, your approach, what was hard, what you'd do
+        next — turns a demo into evidence that you think like an engineer. Hiring managers care about
+        how you reason at least as much as the final pixels.
+      </p>
+
+      <h2>Presentation details that matter</h2>
+      <ul>
+        <li>A clean landing page listing your projects with live links and source.</li>
+        <li>Screenshots or short demos so people don't have to run anything.</li>
+        <li>A clear "about" section and an easy way to contact you.</li>
+        <li>Everything on GitHub, with sensible commits and READMEs.</li>
+      </ul>
+
+      <h2>Tie it to the job</h2>
+      <p>
+        Aiming at product companies? Build something product-like. It helps to know{' '}
+        <Link to="/blog/who-uses-react">who uses React and what they build</Link> so your portfolio
+        speaks their language. When it's ready, line it up with the rest of your search in{' '}
+        <Link to="/blog/start-a-react-career">how to start a career as a React developer</Link>.
+      </p>
+    </>
+  );
+}
+
+function WhoUsesReact() {
+  return (
+    <>
+      <p>
+        React is one of the most widely used ways to build user interfaces on the web — but "popular"
+        is abstract. Who actually uses it, and what do they build with it? Here's the practical
+        picture.
+      </p>
+
+      <h2>From the biggest products to brand-new startups</h2>
+      <p>
+        React started at Facebook and runs across Meta's products, but its reach is far wider. It
+        shows up in social platforms, streaming services, developer tools, dashboards, e-commerce, and
+        countless internal business apps. For startups it's often the default: a huge talent pool, a
+        mature ecosystem, and fast iteration.
+      </p>
+
+      <h2>The kinds of apps React powers</h2>
+      <ul>
+        <li><strong>Content and media</strong> — interactive feeds, players, and reading experiences.</li>
+        <li><strong>Dashboards and SaaS</strong> — data-heavy interfaces with lots of interactive state.</li>
+        <li><strong>E-commerce</strong> — product pages, carts, and checkout flows.</li>
+        <li><strong>Internal tools</strong> — the unglamorous but enormous category most developers work on.</li>
+        <li><strong>Mobile</strong> — via React Native, the same mental model ships to iOS and Android.</li>
+      </ul>
+
+      <h2>Why teams keep choosing it</h2>
+      <p>
+        A few reasons come up again and again: a component model that scales to big teams, an enormous
+        library ecosystem, strong tooling, and a deep hiring pool. When a company can hire React
+        developers easily and find a package for almost anything, React becomes a safe, productive
+        default.
+      </p>
+
+      <h2>What this means for you</h2>
+      <p>
+        Wide adoption is exactly why React skills travel well across industries and company sizes. If
+        you're weighing it up, <Link to="/blog/is-react-worth-learning">is React still worth learning
+        in 2026?</Link> goes deeper; when you're ready to build,{' '}
+        <Link to="/blog/what-to-build-with-react">what to build with React</Link> has ideas; and{' '}
+        <Link to="/blog/start-a-react-career">how to start a React career</Link> covers turning it into
+        a job.
+      </p>
+    </>
+  );
+}
+
+function WhatToBuildWithReact() {
+  return (
+    <>
+      <p>
+        The fastest way to actually learn React is to build with it. Tutorials get you started, but
+        projects are where the concepts stick. Here are eight project ideas, roughly ordered from
+        beginner to ambitious, with what each one teaches.
+      </p>
+
+      <h2>1. A weather app</h2>
+      <p>
+        Type a city, fetch the forecast, display it. Teaches forms, state, and{' '}
+        <Link to="/blog/fetching-data-in-react">fetching data with loading and error states</Link> —
+        the bread and butter of real apps.
+      </p>
+
+      <h2>2. A todo / task list</h2>
+      <p>
+        Cliché, but it teaches lists and keys, adding and removing items, and persisting state. Add
+        filters and you've practised a surprising amount of core React.
+      </p>
+
+      <h2>3. A markdown notes app</h2>
+      <p>
+        Controlled inputs, a live preview, and saving to localStorage. A great exercise in keeping UI
+        in sync with state.
+      </p>
+
+      <h2>4. A movie or book search</h2>
+      <p>
+        Debounced search against a public API, paginated results, and detail pages. Teaches data
+        fetching, derived state, and routing.
+      </p>
+
+      <h2>5. A dashboard with charts</h2>
+      <p>
+        Pull in data and visualise it. Pushes your{' '}
+        <Link to="/blog/thinking-in-components">component structure</Link> and gets you comfortable
+        integrating a third-party library.
+      </p>
+
+      <h2>6. A simple store front end</h2>
+      <p>
+        Product list, cart, and a checkout flow. Teaches shared state and multi-step UI — exactly the
+        kind of thing companies build.
+      </p>
+
+      <h2>7. A clone of an app you use</h2>
+      <p>
+        Rebuilding a slice of something real (a feed, a board) forces you to handle messy, realistic
+        UI — and it makes a memorable portfolio piece.
+      </p>
+
+      <h2>8. Something you actually need</h2>
+      <p>
+        The best project is one you'll use: a habit tracker, a budget tool, a helper for your hobby.
+        Motivation carries you through the hard parts.
+      </p>
+
+      <h2>Turn it into momentum</h2>
+      <p>
+        Pick one, ship it, then write it up. A couple of finished projects become a{' '}
+        <Link to="/blog/react-developer-portfolio">portfolio that gets you hired</Link>. For the wider
+        path, follow the <Link to="/roadmap">React roadmap</Link>, and see{' '}
+        <Link to="/blog/who-uses-react">who uses React and what they build</Link> for inspiration.
+      </p>
+    </>
+  );
+}
+
 export const bodies = {
   'how-usestate-works': HowUseStateWorks,
   'useeffect-explained': UseEffectExplained,
@@ -795,4 +1132,10 @@ export const bodies = {
   'props-vs-state': PropsVsState,
   'conditional-rendering': ConditionalRendering,
   'fetching-data-in-react': FetchingData,
+  'learn-javascript-before-react': LearnJavaScriptBeforeReact,
+  'is-react-worth-learning': IsReactWorthLearning,
+  'start-a-react-career': StartAReactCareer,
+  'react-developer-portfolio': ReactDeveloperPortfolio,
+  'who-uses-react': WhoUsesReact,
+  'what-to-build-with-react': WhatToBuildWithReact,
 };

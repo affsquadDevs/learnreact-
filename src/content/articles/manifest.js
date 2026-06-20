@@ -1,6 +1,17 @@
 // Article metadata — plain JS so it can be imported by the prerender script (Node)
 // and by src/seo.js for per-route <head>, as well as by the React pages.
 // Article bodies live in ./bodies.jsx, keyed by slug.
+
+// Content pillars, in the order they appear on the blog index.
+export const categories = ['Getting Started', 'Core React', 'Careers', 'React in Practice'];
+
+export const categoryMeta = {
+  'Getting Started': 'New to React? Start here — what it is, whether to learn it, and what you need first.',
+  'Core React': 'The fundamentals: hooks, state, rendering, components, and everyday patterns.',
+  Careers: 'Turn React skills into a job — the path, the portfolio, and what employers look for.',
+  'React in Practice': 'How React is used in the real world, who builds with it, and what to build next.',
+};
+
 export const articles = [
   {
     slug: 'how-usestate-works',
@@ -12,6 +23,7 @@ export const articles = [
     date: '2026-05-12',
     readingMins: 7,
     tags: ['Hooks', 'State', 'Fundamentals'],
+    category: 'Core React',
   },
   {
     slug: 'useeffect-explained',
@@ -23,6 +35,7 @@ export const articles = [
     date: '2026-05-19',
     readingMins: 9,
     tags: ['Hooks', 'Effects', 'Fundamentals'],
+    category: 'Core React',
   },
   {
     slug: 'thinking-in-components',
@@ -34,6 +47,7 @@ export const articles = [
     date: '2026-05-26',
     readingMins: 8,
     tags: ['Components', 'Architecture'],
+    category: 'Core React',
   },
   {
     slug: 'lists-and-keys',
@@ -45,6 +59,7 @@ export const articles = [
     date: '2026-06-02',
     readingMins: 6,
     tags: ['Rendering', 'Lists', 'Fundamentals'],
+    category: 'Core React',
   },
   {
     slug: 'controlled-vs-uncontrolled-inputs',
@@ -56,6 +71,7 @@ export const articles = [
     date: '2026-06-06',
     readingMins: 7,
     tags: ['Forms', 'State'],
+    category: 'Core React',
   },
   {
     slug: 'custom-hooks',
@@ -67,6 +83,7 @@ export const articles = [
     date: '2026-06-11',
     readingMins: 8,
     tags: ['Hooks', 'Patterns'],
+    category: 'Core React',
   },
   {
     slug: 'react-rerenders',
@@ -78,6 +95,7 @@ export const articles = [
     date: '2026-06-15',
     readingMins: 9,
     tags: ['Rendering', 'Performance'],
+    category: 'Core React',
   },
   {
     slug: 'usememo-usecallback',
@@ -89,6 +107,7 @@ export const articles = [
     date: '2026-06-18',
     readingMins: 8,
     tags: ['Hooks', 'Performance'],
+    category: 'Core React',
   },
   {
     slug: 'props-vs-state',
@@ -100,6 +119,7 @@ export const articles = [
     date: '2026-06-19',
     readingMins: 6,
     tags: ['Fundamentals', 'Props', 'State'],
+    category: 'Core React',
   },
   {
     slug: 'conditional-rendering',
@@ -111,6 +131,7 @@ export const articles = [
     date: '2026-06-20',
     readingMins: 6,
     tags: ['Rendering', 'Patterns'],
+    category: 'Core React',
   },
   {
     slug: 'fetching-data-in-react',
@@ -122,6 +143,79 @@ export const articles = [
     date: '2026-06-20',
     readingMins: 8,
     tags: ['Effects', 'Data', 'Patterns'],
+    category: 'Core React',
+  },
+  {
+    slug: 'learn-javascript-before-react',
+    title: 'Do You Need to Learn JavaScript Before React?',
+    description:
+      'How much JavaScript you really need before learning React, the specific JS features that matter most, and how to avoid getting stuck.',
+    excerpt:
+      'Learn JavaScript first, or jump straight into React? Here is the honest answer — and the exact JavaScript you need to be comfortable.',
+    date: '2026-06-14',
+    readingMins: 7,
+    tags: ['Beginners', 'JavaScript'],
+    category: 'Getting Started',
+  },
+  {
+    slug: 'is-react-worth-learning',
+    title: 'Is React Still Worth Learning in 2026?',
+    description:
+      'An honest look at whether React is worth learning in 2026: the job market, ecosystem, alternatives, and who it makes sense for.',
+    excerpt:
+      'With a new framework trending every month, is React still a smart thing to learn in 2026? A straight answer, with the trade-offs.',
+    date: '2026-06-15',
+    readingMins: 7,
+    tags: ['Industry', 'Beginners'],
+    category: 'Getting Started',
+  },
+  {
+    slug: 'start-a-react-career',
+    title: 'How to Start a Career as a React Developer',
+    description:
+      'A realistic, step-by-step path to your first React job: what to learn, what to build, how to prove your skills, and how to land interviews.',
+    excerpt:
+      'Want to get paid to write React? Here is an honest, step-by-step path from "learning the basics" to landing your first developer role.',
+    date: '2026-06-16',
+    readingMins: 9,
+    tags: ['Career', 'Beginners'],
+    category: 'Careers',
+  },
+  {
+    slug: 'react-developer-portfolio',
+    title: 'Building a React Portfolio That Gets You Hired',
+    description:
+      'What to put in a React portfolio, which projects actually impress employers, and how to present your work so it stands out to hiring managers.',
+    excerpt:
+      'A good portfolio beats a long CV for junior React roles. Here is what to build, what to cut, and how to present it.',
+    date: '2026-06-17',
+    readingMins: 8,
+    tags: ['Career', 'Projects'],
+    category: 'Careers',
+  },
+  {
+    slug: 'who-uses-react',
+    title: 'Who Uses React in 2026 — and What They Build',
+    description:
+      'From startups to the biggest products on the web, a look at who relies on React, the kinds of apps it powers, and why it stays a default choice.',
+    excerpt:
+      'React is everywhere — but where exactly? A tour of the companies and products built on React, and why they chose it.',
+    date: '2026-06-15',
+    readingMins: 7,
+    tags: ['Industry', 'Ecosystem'],
+    category: 'React in Practice',
+  },
+  {
+    slug: 'what-to-build-with-react',
+    title: 'What Can You Build With React? 8 Project Ideas',
+    description:
+      'Eight practical project ideas to learn React by building — from a weather app to a dashboard — with the concepts each one teaches.',
+    excerpt:
+      'The fastest way to learn React is to build with it. Here are eight project ideas, ordered by difficulty, and what each one teaches you.',
+    date: '2026-06-18',
+    readingMins: 8,
+    tags: ['Projects', 'Learning'],
+    category: 'React in Practice',
   },
 ];
 

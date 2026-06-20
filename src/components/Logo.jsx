@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import styles from './Logo.module.css';
 
-export default function Logo({ to = '/' }) {
+export default function Logo({ to = '/', onDark = false }) {
   return (
-    <Link to={to} className={styles.logo} aria-label="ReactWay home">
+    <Link
+      to={to}
+      className={`${styles.logo}${onDark ? ` ${styles.onDark}` : ''}`}
+      aria-label="ReactWay home"
+    >
       <span className={styles.mark}>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <g fill="none" stroke="currentColor" strokeWidth="1.4">

@@ -42,7 +42,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.brandCol}>
-          <Logo />
+          <Logo onDark />
           <p>Learn React in a structured way, with practice and progress tracking.</p>
           <div className={styles.socials}>
             {socials.map((s) => (

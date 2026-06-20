@@ -1,3 +1,18 @@
+.pillar {
+  margin-top: 44px;
+}
+.pillar:first-of-type {
+  margin-top: 8px;
+}
+.pillarTitle {
+  font-size: 25px;
+  margin-bottom: 4px;
+}
+.pillarLead {
+  color: var(--c-muted);
+  margin: 0 0 6px;
+}
+
 .postList {
   list-style: none;
   padding: 0;

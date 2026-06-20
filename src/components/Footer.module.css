@@ -12,10 +12,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.brandCol :global(.word) {
-  color: #fff;
-}
-
 .brandCol p {
   margin-top: 18px;
   max-width: 280px;
