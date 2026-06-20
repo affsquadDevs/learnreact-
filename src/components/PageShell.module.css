@@ -94,6 +94,26 @@
   color: var(--c-blue-dark);
 }
 
+.article pre {
+  background: var(--c-ink);
+  color: #e8eefc;
+  border-radius: var(--r-sm);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.article :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--c-line-2);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
 .article address {
   font-style: normal;
   color: var(--c-ink-2);

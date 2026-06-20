@@ -8,6 +8,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import Blog from './pages/Blog';
+import Article from './pages/Article';
 import NotFound from './pages/NotFound';
 import { routeMeta } from './seo';
 
@@ -41,6 +43,8 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<Article />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

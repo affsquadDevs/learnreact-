@@ -9,6 +9,7 @@ const cols = [
       { label: 'Curriculum', href: '#curriculum' },
       { label: 'All modules', to: '/course' },
       { label: 'Roadmap', to: '/roadmap' },
+      { label: 'Articles', to: '/blog' },
     ],
   },
   {

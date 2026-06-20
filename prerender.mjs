@@ -1,21 +1,31 @@
 // Static prerender step: renders each route to HTML and bakes per-route <head>
-// metadata into dist/*.html. Runs after `vite build` (client) and the SSR build.
-import { readFileSync, writeFileSync } from 'node:fs';
+// metadata into dist/*.html, then generates the sitemap. Runs after the client
+// build and the SSR build.
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { render } from './dist-ssr/entry-server.js';
 import { SITE, routeMeta } from './src/seo.js';
+import { articles } from './src/content/articles/manifest.js';
 
 const template = readFileSync('dist/index.html', 'utf8');
+const STATIC_DATE = '2026-06-20';
 
 const ROUTES = [
-  { url: '/', key: '/', out: 'dist/index.html' },
-  { url: '/course', key: '/course', out: 'dist/course.html' },
-  { url: '/roadmap', key: '/roadmap', out: 'dist/roadmap.html' },
-  { url: '/about', key: '/about', out: 'dist/about.html' },
-  { url: '/contact', key: '/contact', out: 'dist/contact.html' },
-  { url: '/privacy', key: '/privacy', out: 'dist/privacy.html' },
-  { url: '/terms', key: '/terms', out: 'dist/terms.html' },
+  { url: '/', key: '/', out: 'dist/index.html', lastmod: STATIC_DATE },
+  { url: '/course', key: '/course', out: 'dist/course.html', lastmod: STATIC_DATE },
+  { url: '/roadmap', key: '/roadmap', out: 'dist/roadmap.html', lastmod: STATIC_DATE },
+  { url: '/about', key: '/about', out: 'dist/about.html', lastmod: STATIC_DATE },
+  { url: '/contact', key: '/contact', out: 'dist/contact.html', lastmod: STATIC_DATE },
+  { url: '/privacy', key: '/privacy', out: 'dist/privacy.html', lastmod: STATIC_DATE },
+  { url: '/terms', key: '/terms', out: 'dist/terms.html', lastmod: STATIC_DATE },
+  { url: '/blog', key: '/blog', out: 'dist/blog.html', lastmod: STATIC_DATE },
+  ...articles.map((a) => ({
+    url: `/blog/${a.slug}`,
+    key: `/blog/${a.slug}`,
+    out: `dist/blog/${a.slug}.html`,
+    lastmod: a.date,
+  })),
   // Rendered via the catch-all route; Vercel serves dist/404.html with a 404 status.
-  { url: '/__not_found__', key: 404, out: 'dist/404.html' },
+  { url: '/__not_found__', key: 404, out: 'dist/404.html', lastmod: STATIC_DATE },
 ];
 
 const esc = (s = '') =>
@@ -39,6 +49,8 @@ function headTags(meta, canonicalPath) {
   return tags.map((t) => `    ${t}`).join('\n');
 }
 
+mkdirSync('dist/blog', { recursive: true });
+
 for (const r of ROUTES) {
   const meta = routeMeta[r.key] || routeMeta[404];
   const appHtml = render(r.url);
@@ -49,3 +61,14 @@ for (const r of ROUTES) {
   writeFileSync(r.out, html);
   console.log(`prerendered ${r.url} -> ${r.out}`);
 }
+
+// Generate sitemap.xml from indexable routes (excludes noindex pages like /course, and 404).
+const indexable = ROUTES.filter((r) => r.key !== 404 && !(routeMeta[r.key] || {}).noindex);
+const urls = indexable
+  .map((r) => `  <url>\n    <loc>${SITE}${r.url}</loc>\n    <lastmod>${r.lastmod}</lastmod>\n  </url>`)
+  .join('\n');
+writeFileSync(
+  'dist/sitemap.xml',
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+);
+console.log(`generated dist/sitemap.xml (${indexable.length} urls)`);

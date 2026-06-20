@@ -1,6 +1,8 @@
 // Single source of truth for per-route SEO metadata.
 // Used by the prerender step (prerender.mjs) to bake static <head> tags into each
 // route's HTML, and by ScrollToTop (src/App.jsx) to update document.title on SPA nav.
+import { articles } from './content/articles/manifest.js';
+
 export const SITE = 'https://YOUR_DOMAIN';
 
 export const routeMeta = {
@@ -13,6 +15,9 @@ export const routeMeta = {
     title: 'React Course — Hands-On Lessons with Progress Tracking | ReactWay',
     description:
       "Work through ReactWay's structured React course: components, hooks, state and routing with hands-on exercises and built-in progress tracking.",
+    // Course lessons are still placeholder content — keep out of the index until real
+    // lessons are published (also removed from sitemap.xml). Remove `noindex` when ready.
+    noindex: true,
   },
   '/roadmap': {
     title: 'React Learning Roadmap — Step-by-Step Path | ReactWay',
@@ -45,3 +50,16 @@ export const routeMeta = {
     noindex: true,
   },
 };
+
+// Blog index + one entry per article (keeps client titles and prerendered <head> in sync).
+routeMeta['/blog'] = {
+  title: 'React Articles & Guides | ReactWay',
+  description:
+    'In-depth, practical guides to core React concepts: hooks, rendering, components, forms, and performance.',
+};
+for (const a of articles) {
+  routeMeta[`/blog/${a.slug}`] = {
+    title: `${a.title} | ReactWay`,
+    description: a.description,
+  };
+}

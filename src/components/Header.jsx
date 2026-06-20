@@ -7,6 +7,7 @@ import styles from './Header.module.css';
 const navLinks = [
   { label: 'Course', to: '/course' },
   { label: 'Roadmap', to: '/roadmap' },
+  { label: 'Articles', to: '/blog' },
   { label: 'Curriculum', href: '#curriculum' },
   { label: 'Features', href: '#features' },
   { label: 'How it works', href: '#how' },

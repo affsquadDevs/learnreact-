@@ -14,6 +14,7 @@ export default function PageShell({ title, lead, updated, children }) {
             <Link to="/">Home</Link>
             <Link to="/course">Course</Link>
             <Link to="/roadmap">Roadmap</Link>
+            <Link to="/blog">Articles</Link>
           </nav>
         </div>
       </header>
