@@ -2,15 +2,19 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { allLessons } from '../data/course';
 
 const STORAGE_KEY = 'reactway.progress.v1';
+const lessonIds = new Set(allLessons.map((lesson) => lesson.id));
 
 function readStore() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { completed: {}, lastLesson: null };
     const parsed = JSON.parse(raw);
+    const completed = Object.fromEntries(
+      Object.entries(parsed.completed ?? {}).filter(([id]) => lessonIds.has(id))
+    );
     return {
-      completed: parsed.completed ?? {},
-      lastLesson: parsed.lastLesson ?? null,
+      completed,
+      lastLesson: lessonIds.has(parsed.lastLesson) ? parsed.lastLesson : null,
     };
   } catch {
     return { completed: {}, lastLesson: null };
@@ -71,7 +75,7 @@ export function useProgress() {
     setState({ completed: {}, lastLesson: null });
   }, []);
 
-  const completedCount = Object.keys(state.completed).length;
+  const completedCount = Object.keys(state.completed).filter((id) => lessonIds.has(id)).length;
   const total = allLessons.length;
   const percent = total ? Math.round((completedCount / total) * 100) : 0;
 

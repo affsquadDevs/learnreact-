@@ -178,6 +178,12 @@
   transition: background 0.16s ease, color 0.16s ease;
 }
 .navBtn:hover { background: var(--c-line-2); }
+.navActive {
+  background: var(--c-blue-soft);
+  color: var(--c-blue);
+  font-weight: 600;
+}
+.navActive .navIcon { color: var(--c-blue); }
 .navIcon { color: var(--c-muted); flex-shrink: 0; }
 
 .navBtn em {
@@ -580,12 +586,16 @@
   color: var(--c-muted);
   border-bottom: 1px solid var(--c-line);
 }
-.tabs span {
+.tabs span,
+.tabs button {
   padding-bottom: 12px;
   cursor: pointer;
+  font-size: 13.5px;
+  color: var(--c-muted);
   transition: color 0.16s ease;
 }
-.tabs span:hover { color: var(--c-ink-2); }
+.tabs span:hover,
+.tabs button:hover { color: var(--c-ink-2); }
 .tabActive {
   color: var(--c-ink);
   font-weight: 600;
@@ -602,12 +612,26 @@
   border-radius: 2px;
 }
 
+.emptyRow {
+  padding: 18px 2px;
+  font-size: 14px;
+  color: var(--c-muted);
+}
+
 .moduleRow {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 11px 0;
+  padding: 11px 10px;
+  margin: 0 -10px;
+  border-radius: 10px;
+  text-align: left;
+  background: none;
+  transition: background 0.16s ease;
 }
+.moduleRow:hover { background: var(--c-line-2); }
+.moduleRow:active { transform: scale(0.995); }
 .rowDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .rowTitle { font-size: 14px; font-weight: 500; width: 200px; }
 .rowTrack {

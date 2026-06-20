@@ -51,6 +51,8 @@ export default function Course() {
   } = progress;
 
   const [view, setView] = useState('dashboard');
+  const [activeNav, setActiveNav] = useState('lessons');
+  const [moduleFilter, setModuleFilter] = useState('all');
   const [activeId, setActiveId] = useState(() => lastLesson ?? allLessons[0].id);
 
   const activeLesson = useMemo(
@@ -71,9 +73,28 @@ export default function Course() {
     if (view === 'lesson') setLastLesson(activeLesson.id);
   }, [activeLesson.id, setLastLesson, view]);
 
+  const moduleStatus = (m) => {
+    const done = m.lessons.filter((l) => isCompleted(l.id)).length;
+    if (done === m.lessons.length) return 'completed';
+    if (done > 0) return 'progress';
+    return 'upcoming';
+  };
+
+  const filteredModules =
+    moduleFilter === 'all'
+      ? modules
+      : modules.filter((m) => moduleStatus(m) === moduleFilter);
+
   const openLesson = (id) => {
     setActiveId(id);
     setView('lesson');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goDashboard = (nav, filter) => {
+    setView('dashboard');
+    setActiveNav(nav);
+    setModuleFilter(filter);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -84,10 +105,17 @@ export default function Course() {
   };
 
   const navItems = [
-    { id: 'lessons', label: 'My lessons', Icon: IconBook, count: total, action: () => setView('dashboard') },
-    { id: 'tasks', label: 'Tasks', Icon: IconInbox, count: Math.max(0, total - completedCount) },
-    { id: 'reports', label: 'Reports', Icon: IconChart },
-    { id: 'goals', label: 'Goals', Icon: IconTarget, count: modules.length },
+    { id: 'lessons', label: 'My lessons', Icon: IconBook, count: total, filter: 'all' },
+    { id: 'tasks', label: 'Tasks', Icon: IconInbox, count: Math.max(0, total - completedCount), filter: 'progress' },
+    { id: 'reports', label: 'Reports', Icon: IconChart, filter: 'all' },
+    { id: 'goals', label: 'Goals', Icon: IconTarget, count: modules.length, filter: 'upcoming' },
+  ];
+
+  const moduleTabs = [
+    { id: 'all', label: 'All' },
+    { id: 'progress', label: 'In progress' },
+    { id: 'upcoming', label: 'Upcoming' },
+    { id: 'completed', label: 'Completed' },
   ];
 
   return (
@@ -126,7 +154,7 @@ export default function Course() {
           <button
             type="button"
             className={`${styles.dashBtn} ${view === 'dashboard' ? styles.dashActive : ''}`}
-            onClick={() => setView('dashboard')}
+            onClick={() => goDashboard('lessons', 'all')}
           >
             <IconHome size={18} />
             Dashboard
@@ -138,8 +166,10 @@ export default function Course() {
               <li key={item.id}>
                 <button
                   type="button"
-                  className={styles.navBtn}
-                  onClick={item.action}
+                  className={`${styles.navBtn} ${
+                    view === 'dashboard' && activeNav === item.id ? styles.navActive : ''
+                  }`}
+                  onClick={() => goDashboard(item.id, item.filter)}
                 >
                   <item.Icon size={18} className={styles.navIcon} />
                   <span>{item.label}</span>
@@ -156,7 +186,7 @@ export default function Course() {
               <div key={m.id} className={styles.moduleBlock}>
                 <div className={styles.moduleTitle}>
                   <span className={styles.moduleDot} style={{ background: m.accent }} />
-                  {m.title}
+                  {m.shortTitle ?? m.title}
                   <em>{done}/{m.lessons.length}</em>
                 </div>
                 <ul className={styles.lessonList}>
@@ -339,30 +369,46 @@ export default function Course() {
                     <h3>Your modules</h3>
                   </div>
                   <div className={styles.tabs}>
-                    <span className={styles.tabActive}>In progress</span>
-                    <span>Upcoming</span>
-                    <span>Completed</span>
+                    {moduleTabs.map((t) => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        className={moduleFilter === t.id ? styles.tabActive : ''}
+                        onClick={() => setModuleFilter(t.id)}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
                   </div>
-                  {modules.map((m) => {
-                    const done = m.lessons.filter((l) => isCompleted(l.id)).length;
-                    const pct = Math.round((done / m.lessons.length) * 100);
-                    return (
-                      <div key={m.id} className={styles.moduleRow}>
-                        <span className={styles.rowDot} style={{ background: m.accent }} />
-                        <span className={styles.rowTitle}>{m.title}</span>
-                        <div className={styles.rowTrack}>
-                          <motion.div
-                            className={styles.rowFill}
-                            style={{ background: m.accent }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${pct}%` }}
-                            transition={{ duration: 0.8, ease: easeOut }}
-                          />
-                        </div>
-                        <span className={styles.rowPct}>{pct}%</span>
-                      </div>
-                    );
-                  })}
+                  {filteredModules.length === 0 ? (
+                    <p className={styles.emptyRow}>No modules in this group yet.</p>
+                  ) : (
+                    filteredModules.map((m) => {
+                      const done = m.lessons.filter((l) => isCompleted(l.id)).length;
+                      const pct = Math.round((done / m.lessons.length) * 100);
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          className={styles.moduleRow}
+                          onClick={() => openLesson(m.lessons[0].id)}
+                        >
+                          <span className={styles.rowDot} style={{ background: m.accent }} />
+                          <span className={styles.rowTitle}>{m.title}</span>
+                          <div className={styles.rowTrack}>
+                            <motion.div
+                              className={styles.rowFill}
+                              style={{ background: m.accent }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${pct}%` }}
+                              transition={{ duration: 0.8, ease: easeOut }}
+                            />
+                          </div>
+                          <span className={styles.rowPct}>{pct}%</span>
+                        </button>
+                      );
+                    })
+                  )}
                 </section>
 
                 <motion.div
@@ -411,7 +457,7 @@ export default function Course() {
                       className={styles.typePill}
                       style={{ background: `${activeLesson.accent}14`, color: activeLesson.accent }}
                     >
-                      {activeLesson.type}
+                      {activeLesson.type} · {activeLesson.concepts?.length ?? 0} concepts
                     </span>
                     <h1>{activeLesson.title}</h1>
                     <span className={styles.lessonSub}>
@@ -447,31 +493,31 @@ export default function Course() {
                   <section className={styles.block}>
                     <h4>Lesson overview</h4>
                     <p className={styles.placeholder}>
-                      The lesson description goes here. For now this is a template — content
-                      will be added later. Each lesson will include short theory, code
-                      examples and a hands-on exercise.
+                      This lesson is a high-level shell for the <strong>{activeLesson.title}</strong> topic.
+                      Full explanations, examples and exercises will be added later. For now,
+                      use this page to understand what belongs in this topic and track progress.
                     </p>
                   </section>
 
                   <section className={styles.block}>
-                    <h4>What you&apos;ll learn</h4>
+                    <h4>Topic map</h4>
                     <ul className={styles.bullets}>
-                      <li>Key concept #1 <em>(template)</em></li>
-                      <li>Key concept #2 <em>(template)</em></li>
-                      <li>A hands-on code example <em>(template)</em></li>
+                      {(activeLesson.concepts ?? []).map((concept) => (
+                        <li key={concept.id}>{concept.text}</li>
+                      ))}
                     </ul>
                   </section>
                 </div>
 
                 <section className={styles.block}>
-                  <h4>Code example</h4>
+                  <h4>Practice placeholder</h4>
                   <pre className={styles.code}>
                     <span className={styles.codeBar}>
                       <i /><i /><i />
                     </span>
-{`function Example() {
-  return <h1>Hello, React!</h1>;
-}`}
+{`// Practice content will be added here.
+// Topic: ${activeLesson.title}
+// Concepts: ${activeLesson.concepts?.length ?? 0}`}
                   </pre>
                 </section>
 
