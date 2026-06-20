@@ -1,79 +1,69 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { allLessons } from '../data/course';
+import {
+  PROGRESS_EVENT,
+  COURSE_KEY,
+  ROADMAP_KEY,
+  readSynced,
+  resetAll,
+  setLastLesson as storeSetLastLesson,
+  toggleLesson as storeToggleLesson,
+} from '../lib/progressStore';
 
-const STORAGE_KEY = 'reactway.progress.v1';
 const lessonIds = new Set(allLessons.map((lesson) => lesson.id));
 
-function readStore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { completed: {}, lastLesson: null };
-    const parsed = JSON.parse(raw);
-    const completed = Object.fromEntries(
-      Object.entries(parsed.completed ?? {}).filter(([id]) => lessonIds.has(id))
-    );
-    return {
-      completed,
-      lastLesson: lessonIds.has(parsed.lastLesson) ? parsed.lastLesson : null,
-    };
-  } catch {
-    return { completed: {}, lastLesson: null };
-  }
+function loadCourseState() {
+  return readSynced().course;
 }
 
 /**
- * Persists course progress to localStorage and keeps tabs in sync.
+ * Persists course progress to localStorage, synced with roadmap concept progress.
  */
 export function useProgress() {
   const [state, setState] = useState({ completed: {}, lastLesson: null });
-  const firstPersist = useRef(true);
 
-  // Load persisted progress on the client after mount, so SSR/first render matches
-  // the prerendered HTML (no hydration mismatch) and localStorage isn't read during render.
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional one-time client load of persisted state for SSR-safe hydration
-    setState(readStore());
+  const refresh = useCallback(() => {
+    setState(loadCourseState());
   }, []);
 
   useEffect(() => {
-    if (firstPersist.current) {
-      firstPersist.current = false;
-      return;
-    }
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      /* storage unavailable — ignore */
-    }
-  }, [state]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only load after mount for SSR-safe hydration
+    refresh();
+  }, [refresh]);
 
-  // Sync progress across open tabs.
   useEffect(() => {
     const onStorage = (e) => {
-      if (e.key === STORAGE_KEY) setState(readStore());
+      if (e.key === COURSE_KEY || e.key === ROADMAP_KEY) refresh();
     };
+    const onSync = () => refresh();
     window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+    window.addEventListener(PROGRESS_EVENT, onSync);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener(PROGRESS_EVENT, onSync);
+    };
+  }, [refresh]);
 
-  const toggleLesson = useCallback((lessonId) => {
-    setState((prev) => {
-      const completed = { ...prev.completed };
-      if (completed[lessonId]) delete completed[lessonId];
-      else completed[lessonId] = Date.now();
-      return { ...prev, completed };
-    });
-  }, []);
+  const toggleLesson = useCallback(
+    (lessonId) => {
+      storeToggleLesson(lessonId);
+      refresh();
+    },
+    [refresh]
+  );
 
-  const setLastLesson = useCallback((lessonId) => {
-    setState((prev) =>
-      prev.lastLesson === lessonId ? prev : { ...prev, lastLesson: lessonId }
-    );
-  }, []);
+  const setLastLesson = useCallback(
+    (lessonId) => {
+      storeSetLastLesson(lessonId);
+      refresh();
+    },
+    [refresh]
+  );
 
   const resetProgress = useCallback(() => {
-    setState({ completed: {}, lastLesson: null });
-  }, []);
+    resetAll();
+    refresh();
+  }, [refresh]);
 
   const completedCount = Object.keys(state.completed).filter((id) => lessonIds.has(id)).length;
   const total = allLessons.length;

@@ -51,16 +51,9 @@ export default function Showcase() {
                 ReactWay
               </div>
               <button className={styles.createBtn}>+ Create</button>
-              <span className={styles.navLabel}>Learning</span>
-              <ul>
-                <li className={styles.active}>🏠 Dashboard</li>
-                <li>📘 My lessons <em>22</em></li>
-                <li>📥 Tasks <em>5</em></li>
-                <li>📊 Reports</li>
-                <li>🎯 Goals <em>8</em></li>
-              </ul>
               <span className={styles.navLabel}>Modules</span>
               <ul>
+                <li className={styles.active}>🏠 Dashboard</li>
                 <li>🔵 Foundations</li>
                 <li>🟣 State & Hooks</li>
                 <li>🟠 Production</li>
@@ -74,14 +67,11 @@ export default function Showcase() {
                 <div className={styles.topRight}>
                   <span className={styles.iconBtn}>🔍</span>
                   <span className={styles.iconBtn}>🔔</span>
-                  <span className={styles.userChip}>
-                    <span className={styles.userAvatar} /> Alex
-                  </span>
                 </div>
               </div>
 
               <p className={styles.greeting}>
-                Good morning, <strong>Alex</strong>
+                Your learning dashboard
               </p>
 
               <div className={styles.cardsGrid}>

@@ -136,3 +136,69 @@ export const IconSparkle = (p) => (
     <path d="M7.5 7.5 16.5 16.5M16.5 7.5 7.5 16.5" opacity="0.5" />
   </Svg>
 );
+
+export const IconChevron = (p) => (
+  <Svg {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Svg>
+);
+
+export const IconBulb = (p) => (
+  <Svg {...p}>
+    <path d="M9 18h6" />
+    <path d="M10 21h4" />
+    <path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.2 1 2V16h6v-.5c0-.8.4-1.4 1-2A6 6 0 0 0 12 3z" />
+  </Svg>
+);
+
+export const IconAlert = (p) => (
+  <Svg {...p}>
+    <path d="M12 4 2.5 20h19z" />
+    <path d="M12 10v4" />
+    <circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none" />
+  </Svg>
+);
+
+export const IconLink = (p) => (
+  <Svg {...p}>
+    <path d="M10 14a4 4 0 0 0 5.6 0l2.4-2.4a4 4 0 0 0-5.6-5.6L11 7.4" />
+    <path d="M14 10a4 4 0 0 0-5.6 0L6 12.4a4 4 0 0 0 5.6 5.6L13 16.6" />
+  </Svg>
+);
+
+export const IconList = (p) => (
+  <Svg {...p}>
+    <path d="M8 6h12M8 12h12M8 18h12" />
+    <path d="M4 6h.01M4 12h.01M4 18h.01" />
+  </Svg>
+);
+
+export const IconCode = (p) => (
+  <Svg {...p}>
+    <path d="m8 8-4 4 4 4" />
+    <path d="m16 8 4 4-4 4" />
+    <path d="m13 6-2 12" opacity="0.6" />
+  </Svg>
+);
+
+export const IconHelp = (p) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M9.5 9.5a2.5 2.5 0 0 1 4.5 1.5c0 1.5-2 2-2 3.2" />
+    <circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none" />
+  </Svg>
+);
+
+export const IconDumbbell = (p) => (
+  <Svg {...p}>
+    <path d="M6.5 6.5v11M3.5 9v6M17.5 6.5v11M20.5 9v6M6.5 12h11" />
+  </Svg>
+);
+
+export const IconFlow = (p) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="7" height="5" rx="1.4" />
+    <rect x="14" y="15" width="7" height="5" rx="1.4" />
+    <path d="M6.5 9v4a2 2 0 0 0 2 2H14" />
+  </Svg>
+);

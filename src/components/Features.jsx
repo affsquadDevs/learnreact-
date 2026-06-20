@@ -31,10 +31,10 @@ export default function Features() {
         <motion.article className={`${styles.card} ${styles.big}`} variants={fadeUp}>
           <div className={styles.visual}>
             <div className={styles.miniPanel}>
-              <span className={styles.miniLabel}>Course team</span>
-              <div className={styles.member}><span className={styles.avA} /> Mentor</div>
-              <div className={styles.member}><span className={styles.avB} /> Alex P.</div>
-              <div className={styles.member}><span className={styles.avC} /> Jane F.</div>
+              <span className={styles.miniLabel}>Saved locally</span>
+              <div className={styles.member}><span className={styles.avA} /> Your progress</div>
+              <div className={styles.member}><span className={styles.avB} /> Lesson notes</div>
+              <div className={styles.member}><span className={styles.avC} /> Practice tasks</div>
             </div>
           </div>
           <h3>Never learn alone</h3>

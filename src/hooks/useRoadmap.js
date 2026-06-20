@@ -1,77 +1,69 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { totalConcepts } from '../data/roadmap';
+import {
+  PROGRESS_EVENT,
+  COURSE_KEY,
+  ROADMAP_KEY,
+  readSynced,
+  resetAll,
+  toggleConcept as storeToggleConcept,
+  toggleTopic as storeToggleTopic,
+} from '../lib/progressStore';
 
-const STORAGE_KEY = 'reactway.roadmap.v1';
-
-function readStore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { done: {} };
-    const parsed = JSON.parse(raw);
-    return { done: parsed.done ?? {} };
-  } catch {
-    return { done: {} };
-  }
+function loadRoadmapState() {
+  return readSynced().roadmap;
 }
 
 /**
- * Tracks completed roadmap concepts in localStorage (per concept id).
+ * Tracks completed roadmap concepts in localStorage, synced with course lesson progress.
  */
 export function useRoadmap() {
   const [state, setState] = useState({ done: {} });
-  const firstPersist = useRef(true);
 
-  // Load persisted roadmap progress on the client after mount (avoids hydration mismatch).
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional one-time client load of persisted state for SSR-safe hydration
-    setState(readStore());
+  const refresh = useCallback(() => {
+    setState(loadRoadmapState());
   }, []);
 
   useEffect(() => {
-    if (firstPersist.current) {
-      firstPersist.current = false;
-      return;
-    }
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      /* ignore */
-    }
-  }, [state]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only load after mount for SSR-safe hydration
+    refresh();
+  }, [refresh]);
 
   useEffect(() => {
     const onStorage = (e) => {
-      if (e.key === STORAGE_KEY) setState(readStore());
+      if (e.key === ROADMAP_KEY || e.key === COURSE_KEY) refresh();
     };
+    const onSync = () => refresh();
     window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+    window.addEventListener(PROGRESS_EVENT, onSync);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener(PROGRESS_EVENT, onSync);
+    };
+  }, [refresh]);
 
   const isDone = useCallback((id) => Boolean(state.done[id]), [state.done]);
 
-  const toggleConcept = useCallback((id) => {
-    setState((prev) => {
-      const done = { ...prev.done };
-      if (done[id]) delete done[id];
-      else done[id] = Date.now();
-      return { done };
-    });
-  }, []);
+  const toggleConcept = useCallback(
+    (id) => {
+      storeToggleConcept(id);
+      refresh();
+    },
+    [refresh]
+  );
 
-  // Mark every concept in a topic done (or clear them all if already complete).
-  const toggleTopic = useCallback((conceptIds) => {
-    setState((prev) => {
-      const done = { ...prev.done };
-      const allDone = conceptIds.every((id) => done[id]);
-      conceptIds.forEach((id) => {
-        if (allDone) delete done[id];
-        else done[id] = Date.now();
-      });
-      return { done };
-    });
-  }, []);
+  const toggleTopic = useCallback(
+    (conceptIds) => {
+      storeToggleTopic(conceptIds);
+      refresh();
+    },
+    [refresh]
+  );
 
-  const resetRoadmap = useCallback(() => setState({ done: {} }), []);
+  const resetRoadmap = useCallback(() => {
+    resetAll();
+    refresh();
+  }, [refresh]);
 
   const completedCount = Object.keys(state.done).length;
   const percent = totalConcepts

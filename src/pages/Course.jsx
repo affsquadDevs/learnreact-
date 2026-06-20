@@ -7,20 +7,18 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconBell,
-  IconBook,
   IconCalendar,
-  IconChart,
   IconCheck,
   IconClock,
   IconHome,
-  IconInbox,
   IconPause,
   IconPlay,
   IconSearch,
   IconStop,
-  IconTarget,
 } from '../components/icons';
+import LessonContent from '../components/lesson/LessonContent';
 import { modules, allLessons, courseMeta } from '../data/course';
+import { hasContent } from '../data/courseContent';
 import { useProgress } from '../hooks/useProgress';
 import { useStudyTimerContext } from '../context/StudyTimerContext';
 import { easeOut } from '../lib/motion';
@@ -51,9 +49,22 @@ export default function Course() {
   } = progress;
 
   const [view, setView] = useState('dashboard');
-  const [activeNav, setActiveNav] = useState('lessons');
   const [moduleFilter, setModuleFilter] = useState('all');
   const [activeId, setActiveId] = useState(() => lastLesson ?? allLessons[0].id);
+  const [query, setQuery] = useState('');
+  const [bellOpen, setBellOpen] = useState(false);
+
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return allLessons
+      .filter(
+        (l) =>
+          l.title.toLowerCase().includes(q) ||
+          l.moduleTitle.toLowerCase().includes(q)
+      )
+      .slice(0, 6);
+  }, [query]);
 
   const activeLesson = useMemo(
     () => allLessons.find((l) => l.id === activeId) ?? allLessons[0],
@@ -68,6 +79,25 @@ export default function Course() {
   const recentDone = allLessons.filter((l) => isCompleted(l.id)).slice(-2);
   const studyHours = Math.floor(timer.totalSeconds / 3600);
   const weeklyPct = Math.min(100, Math.round((studyHours / WEEKLY_GOAL_HOURS) * 100));
+
+  const notifications = [
+    {
+      id: 'progress',
+      title: `${percent}% completed`,
+      text: `${completedCount} of ${total} lessons done.`,
+    },
+    pendingLessons[0] && {
+      id: 'next',
+      title: 'Up next',
+      text: pendingLessons[0].title,
+      lessonId: pendingLessons[0].id,
+    },
+    {
+      id: 'time',
+      title: 'Study time',
+      text: `You've logged ${timer.formatted} so far.`,
+    },
+  ].filter(Boolean);
 
   useEffect(() => {
     if (view === 'lesson') setLastLesson(activeLesson.id);
@@ -91,10 +121,8 @@ export default function Course() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const goDashboard = (nav, filter) => {
+  const goDashboard = () => {
     setView('dashboard');
-    setActiveNav(nav);
-    setModuleFilter(filter);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -103,13 +131,6 @@ export default function Course() {
       resetProgress();
     }
   };
-
-  const navItems = [
-    { id: 'lessons', label: 'My lessons', Icon: IconBook, count: total, filter: 'all' },
-    { id: 'tasks', label: 'Tasks', Icon: IconInbox, count: Math.max(0, total - completedCount), filter: 'progress' },
-    { id: 'reports', label: 'Reports', Icon: IconChart, filter: 'all' },
-    { id: 'goals', label: 'Goals', Icon: IconTarget, count: modules.length, filter: 'upcoming' },
-  ];
 
   const moduleTabs = [
     { id: 'all', label: 'All' },
@@ -154,30 +175,11 @@ export default function Course() {
           <button
             type="button"
             className={`${styles.dashBtn} ${view === 'dashboard' ? styles.dashActive : ''}`}
-            onClick={() => goDashboard('lessons', 'all')}
+            onClick={goDashboard}
           >
             <IconHome size={18} />
             Dashboard
           </button>
-
-          <span className={styles.navLabel}>Learning</span>
-          <ul className={styles.navList}>
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  type="button"
-                  className={`${styles.navBtn} ${
-                    view === 'dashboard' && activeNav === item.id ? styles.navActive : ''
-                  }`}
-                  onClick={() => goDashboard(item.id, item.filter)}
-                >
-                  <item.Icon size={18} className={styles.navIcon} />
-                  <span>{item.label}</span>
-                  {item.count != null && <em>{item.count}</em>}
-                </button>
-              </li>
-            ))}
-          </ul>
 
           <span className={styles.navLabel}>Modules</span>
           {modules.map((m) => {
@@ -195,10 +197,8 @@ export default function Course() {
                     const active = view === 'lesson' && l.id === activeLesson.id;
                     return (
                       <li key={l.id}>
-                        <button
-                          type="button"
+                        <div
                           className={`${styles.lessonItem} ${active ? styles.lessonItemActive : ''}`}
-                          onClick={() => openLesson(l.id)}
                         >
                           {active && (
                             <motion.span
@@ -208,14 +208,28 @@ export default function Course() {
                               transition={{ duration: 0.3, ease: easeOut }}
                             />
                           )}
-                          <span
-                            className={`${styles.check} ${completed ? styles.checkOn : ''}`}
-                            style={completed ? { background: m.accent, borderColor: m.accent } : undefined}
+                          <button
+                            type="button"
+                            className={styles.checkBtn}
+                            onClick={() => toggleLesson(l.id)}
+                            aria-pressed={completed}
+                            aria-label={completed ? 'Mark as not done' : 'Mark as done'}
                           >
-                            {completed && <IconCheck size={12} />}
-                          </span>
-                          {l.title}
-                        </button>
+                            <span
+                              className={`${styles.check} ${completed ? styles.checkOn : ''}`}
+                              style={completed ? { background: m.accent, borderColor: m.accent } : undefined}
+                            >
+                              {completed && <IconCheck size={12} />}
+                            </span>
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.lessonOpen}
+                            onClick={() => openLesson(l.id)}
+                          >
+                            {l.title}
+                          </button>
+                        </div>
                       </li>
                     );
                   })}
@@ -233,16 +247,90 @@ export default function Course() {
               {todayLabel()}
             </span>
             <div className={styles.mainTopRight}>
-              <button type="button" className={styles.iconBtn} aria-label="Search">
-                <IconSearch size={17} />
-              </button>
-              <button type="button" className={styles.iconBtn} aria-label="Notifications">
-                <IconBell size={17} />
-              </button>
-              <span className={styles.userChip}>
-                <span className={styles.userAvatar}>A</span>
-                Alex
-              </span>
+              <div className={styles.search}>
+                <IconSearch size={16} className={styles.searchIcon} />
+                <input
+                  className={styles.searchInput}
+                  type="text"
+                  placeholder="Search lessons…"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                {query.trim() && (
+                  <div className={styles.searchResults}>
+                    {searchResults.length > 0 ? (
+                      searchResults.map((l) => (
+                        <button
+                          key={l.id}
+                          type="button"
+                          className={styles.searchItem}
+                          onClick={() => {
+                            openLesson(l.id);
+                            setQuery('');
+                          }}
+                        >
+                          <span className={styles.searchDot} style={{ background: l.accent }} />
+                          <span className={styles.searchTitle}>{l.title}</span>
+                          <span className={styles.searchModule}>{l.moduleShortTitle}</span>
+                        </button>
+                      ))
+                    ) : (
+                      <p className={styles.searchEmpty}>No lessons found.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.bellWrap}>
+                <button
+                  type="button"
+                  className={`${styles.iconBtn} ${bellOpen ? styles.iconBtnOn : ''}`}
+                  aria-label="Notifications"
+                  onClick={() => setBellOpen((v) => !v)}
+                >
+                  <IconBell size={17} />
+                  {pendingLessons.length > 0 && <span className={styles.bellDot} />}
+                </button>
+                {bellOpen && (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.popBackdrop}
+                      aria-label="Close notifications"
+                      onClick={() => setBellOpen(false)}
+                    />
+                    <motion.div
+                      className={styles.bellPop}
+                      initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.18, ease: easeOut }}
+                    >
+                      <span className={styles.bellHead}>Notifications</span>
+                      {notifications.map((n) =>
+                        n.lessonId ? (
+                          <button
+                            key={n.id}
+                            type="button"
+                            className={styles.bellItem}
+                            onClick={() => {
+                              openLesson(n.lessonId);
+                              setBellOpen(false);
+                            }}
+                          >
+                            <strong>{n.title}</strong>
+                            <span>{n.text}</span>
+                          </button>
+                        ) : (
+                          <div key={n.id} className={styles.bellItem}>
+                            <strong>{n.title}</strong>
+                            <span>{n.text}</span>
+                          </div>
+                        )
+                      )}
+                    </motion.div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
@@ -257,11 +345,9 @@ export default function Course() {
               >
                 <div className={styles.greetingRow}>
                   <div>
-                    <h2 className={styles.greeting}>
-                      Good morning, <strong>Alex</strong>
-                    </h2>
+                    <h2 className={styles.greeting}>Your lessons</h2>
                     <p className={styles.greetingSub}>
-                      You&apos;ve completed {percent}% of the course. Keep the momentum going.
+                      You&apos;ve completed {percent}% of the course. Pick up where you left off.
                     </p>
                   </div>
                 </div>
@@ -476,50 +562,58 @@ export default function Course() {
                   </motion.button>
                 </div>
 
-                <div className={styles.player} style={{ '--accent': activeLesson.accent }}>
-                  <motion.button
-                    type="button"
-                    className={styles.playBtn}
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label="Play lesson"
-                  >
-                    <IconPlay size={22} />
-                  </motion.button>
-                  <span className={styles.playerHint}>The lesson video will appear here</span>
-                </div>
+                {!hasContent(activeLesson.id) && (
+                  <div className={styles.player} style={{ '--accent': activeLesson.accent }}>
+                    <motion.button
+                      type="button"
+                      className={styles.playBtn}
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="Play lesson"
+                    >
+                      <IconPlay size={22} />
+                    </motion.button>
+                    <span className={styles.playerHint}>The lesson video will appear here</span>
+                  </div>
+                )}
 
-                <div className={styles.lessonGrid}>
-                  <section className={styles.block}>
-                    <h4>Lesson overview</h4>
-                    <p className={styles.placeholder}>
-                      This lesson is a high-level shell for the <strong>{activeLesson.title}</strong> topic.
-                      Full explanations, examples and exercises will be added later. For now,
-                      use this page to understand what belongs in this topic and track progress.
-                    </p>
-                  </section>
+                {hasContent(activeLesson.id) ? (
+                  <LessonContent topicId={activeLesson.id} accent={activeLesson.accent} />
+                ) : (
+                  <>
+                    <div className={styles.lessonGrid}>
+                      <section className={styles.block}>
+                        <h4>Lesson overview</h4>
+                        <p className={styles.placeholder}>
+                          This lesson is a high-level shell for the <strong>{activeLesson.title}</strong> topic.
+                          Full explanations, examples and exercises are coming soon. For now,
+                          use this page to understand what belongs in this topic and track progress.
+                        </p>
+                      </section>
 
-                  <section className={styles.block}>
-                    <h4>Topic map</h4>
-                    <ul className={styles.bullets}>
-                      {(activeLesson.concepts ?? []).map((concept) => (
-                        <li key={concept.id}>{concept.text}</li>
-                      ))}
-                    </ul>
-                  </section>
-                </div>
+                      <section className={styles.block}>
+                        <h4>Topic map</h4>
+                        <ul className={styles.bullets}>
+                          {(activeLesson.concepts ?? []).map((concept) => (
+                            <li key={concept.id}>{concept.text}</li>
+                          ))}
+                        </ul>
+                      </section>
+                    </div>
 
-                <section className={styles.block}>
-                  <h4>Practice placeholder</h4>
-                  <pre className={styles.code}>
-                    <span className={styles.codeBar}>
-                      <i /><i /><i />
-                    </span>
-{`// Practice content will be added here.
+                    <section className={styles.block}>
+                      <h4>Practice placeholder</h4>
+                      <pre className={styles.code}>
+                        <span className={styles.codeBar}>
+                          <i /><i /><i />
+                        </span>
+{`// Detailed content will be added here.
 // Topic: ${activeLesson.title}
 // Concepts: ${activeLesson.concepts?.length ?? 0}`}
-                  </pre>
-                </section>
+                      </pre>
+                    </section>
+                  </>
+                )}
 
                 <div className={styles.nav}>
                   <button
