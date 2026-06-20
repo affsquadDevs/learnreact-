@@ -47,6 +47,38 @@ export default function Roadmap() {
         </div>
       </header>
 
+      <main id="main" tabIndex={-1}>
+        <nav aria-label="Breadcrumb" className="container" style={{ paddingTop: '16px' }}>
+          <ol
+            style={{
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+              listStyle: 'none',
+              margin: 0,
+              padding: 0,
+              fontSize: '13.5px',
+            }}
+          >
+            <li><Link to="/" style={{ color: 'var(--c-muted)' }}>Home</Link></li>
+            <li aria-hidden="true" style={{ color: 'var(--c-muted-2)' }}>/</li>
+            <li aria-current="page" style={{ color: 'var(--c-ink)', fontWeight: 600 }}>Roadmap</li>
+          </ol>
+        </nav>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://YOUR_DOMAIN/' },
+                { '@type': 'ListItem', position: 2, name: 'Roadmap', item: 'https://YOUR_DOMAIN/roadmap' },
+              ],
+            }),
+          }}
+        />
+
       {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroGrid} aria-hidden="true" />
@@ -170,6 +202,7 @@ export default function Roadmap() {
           </div>
         </div>
       </section>
+      </main>
     </div>
   );
 }

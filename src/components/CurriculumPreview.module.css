@@ -22,6 +22,7 @@
 }
 
 .card {
+  display: block;
   background: #fff;
   border-radius: var(--r-lg);
   padding: 26px 22px;

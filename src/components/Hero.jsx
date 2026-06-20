@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fadeUp, stagger, easeOut } from '../lib/motion';
 import styles from './Hero.module.css';
@@ -16,8 +16,6 @@ const floatProps = (i, rot = 0) => ({
 });
 
 export default function Hero() {
-  const navigate = useNavigate();
-
   return (
     <section className={styles.hero}>
       <div className={styles.grid} aria-hidden="true" />
@@ -30,7 +28,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.div className={`${styles.card} ${styles.check}`} {...floatProps(2)}>
-        <svg viewBox="0 0 24 24" width="26" height="26">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
           <path
             d="M5 12.5l4.2 4.3L19 7"
             fill="none"
@@ -97,7 +95,7 @@ export default function Hero() {
         </motion.span>
 
         <motion.div className={styles.logoMark} variants={fadeUp}>
-          <svg viewBox="0 0 24 24" width="44" height="44">
+          <svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true">
             <g fill="none" stroke="#2d6bff" strokeWidth="1.3">
               <ellipse cx="12" cy="12" rx="10" ry="3.8" />
               <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)" />
@@ -119,9 +117,9 @@ export default function Hero() {
         </motion.p>
 
         <motion.div className={styles.ctaRow} variants={fadeUp}>
-          <button className="btn btn-primary" onClick={() => navigate('/course')}>
+          <Link className="btn btn-primary" to="/course">
             Go to course
-            <svg viewBox="0 0 24 24" width="18" height="18">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path
                 d="M5 12h14m-6-6l6 6-6 6"
                 fill="none"
@@ -131,7 +129,7 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-          </button>
+          </Link>
           <a href="#how" className="btn btn-ghost">
             How it works
           </a>

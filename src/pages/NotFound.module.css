@@ -1,0 +1,40 @@
+.wrap {
+  min-height: 78vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 460px;
+}
+
+.code {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 12vw, 120px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--c-blue);
+  margin: 0;
+}
+
+.title {
+  font-size: clamp(24px, 4vw, 34px);
+}
+
+.sub {
+  color: var(--c-muted);
+  margin: 0 0 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}

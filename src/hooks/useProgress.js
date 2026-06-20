@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { allLessons } from '../data/course';
 
 const STORAGE_KEY = 'reactway.progress.v1';
@@ -21,9 +21,21 @@ function readStore() {
  * Persists course progress to localStorage and keeps tabs in sync.
  */
 export function useProgress() {
-  const [state, setState] = useState(readStore);
+  const [state, setState] = useState({ completed: {}, lastLesson: null });
+  const firstPersist = useRef(true);
+
+  // Load persisted progress on the client after mount, so SSR/first render matches
+  // the prerendered HTML (no hydration mismatch) and localStorage isn't read during render.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional one-time client load of persisted state for SSR-safe hydration
+    setState(readStore());
+  }, []);
 
   useEffect(() => {
+    if (firstPersist.current) {
+      firstPersist.current = false;
+      return;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {

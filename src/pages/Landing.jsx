@@ -11,7 +11,7 @@ export default function Landing() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <Showcase />
         <Features />

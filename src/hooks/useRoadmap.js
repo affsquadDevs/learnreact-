@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { totalConcepts } from '../data/roadmap';
 
 const STORAGE_KEY = 'reactway.roadmap.v1';
@@ -18,9 +18,20 @@ function readStore() {
  * Tracks completed roadmap concepts in localStorage (per concept id).
  */
 export function useRoadmap() {
-  const [state, setState] = useState(readStore);
+  const [state, setState] = useState({ done: {} });
+  const firstPersist = useRef(true);
+
+  // Load persisted roadmap progress on the client after mount (avoids hydration mismatch).
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional one-time client load of persisted state for SSR-safe hydration
+    setState(readStore());
+  }, []);
 
   useEffect(() => {
+    if (firstPersist.current) {
+      firstPersist.current = false;
+      return;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {

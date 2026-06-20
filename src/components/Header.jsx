@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
 import styles from './Header.module.css';
 
 const navLinks = [
-  { label: 'Course', href: '#curriculum' },
+  { label: 'Course', to: '/course' },
   { label: 'Roadmap', to: '/roadmap' },
+  { label: 'Curriculum', href: '#curriculum' },
   { label: 'Features', href: '#features' },
   { label: 'How it works', href: '#how' },
   { label: 'Reviews', href: '#voices' },
@@ -15,7 +16,6 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -49,9 +49,9 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <button className="btn btn-dark" onClick={() => navigate('/course')}>
+          <Link className="btn btn-dark" to="/course">
             Go to course
-          </button>
+          </Link>
         </div>
 
         <button
@@ -81,9 +81,9 @@ export default function Header() {
               </a>
             )
           )}
-          <button className="btn btn-dark" onClick={() => navigate('/course')}>
+          <Link className="btn btn-dark" to="/course" onClick={() => setOpen(false)}>
             Go to course
-          </button>
+          </Link>
         </motion.div>
       )}
     </motion.header>

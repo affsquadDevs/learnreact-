@@ -1,10 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { viewport, easeOut } from '../lib/motion';
 import styles from './CTA.module.css';
 
 export default function CTA() {
-  const navigate = useNavigate();
   return (
     <section className={styles.section}>
       <motion.div
@@ -23,9 +22,9 @@ export default function CTA() {
           Start with the first module today. Your progress is saved automatically.
         </p>
         <div className={styles.actions}>
-          <button className={styles.primary} onClick={() => navigate('/course')}>
+          <Link className={styles.primary} to="/course">
             Go to course
-          </button>
+          </Link>
           <a href="#curriculum" className={styles.ghost}>
             View curriculum
           </a>

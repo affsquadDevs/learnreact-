@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts load via <link rel="preconnect"> + stylesheet in index.html (faster than a CSS @import chain). */
 
 :root {
   /* Brand palette */
@@ -52,6 +52,50 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Accessibility: visible keyboard focus, skip link, reduced-motion guard */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--c-blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  color: var(--c-ink);
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: var(--sh-md);
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  outline: 3px solid var(--c-blue);
+}
+
+/* Programmatic focus target on route change shouldn't draw a box */
+#main:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {

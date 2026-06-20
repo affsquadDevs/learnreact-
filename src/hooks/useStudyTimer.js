@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const STORAGE_KEY = 'reactway.studyTimer.v1';
 
@@ -34,10 +34,21 @@ export function formatStudyTime(totalSeconds) {
  * Study timer with session + lifetime totals persisted in localStorage.
  */
 export function useStudyTimer() {
-  const [state, setState] = useState(readStore);
+  const [state, setState] = useState({ totalSeconds: 0, sessionSeconds: 0, isRunning: false, startedAt: null });
   const [, setTick] = useState(0);
+  const firstPersist = useRef(true);
+
+  // Load persisted timer on the client after mount (avoids hydration mismatch).
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional one-time client load of persisted state for SSR-safe hydration
+    setState(readStore());
+  }, []);
 
   useEffect(() => {
+    if (firstPersist.current) {
+      firstPersist.current = false;
+      return;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {

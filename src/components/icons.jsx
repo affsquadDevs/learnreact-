@@ -7,9 +7,18 @@ const base = {
   strokeLinejoin: 'round',
 };
 
-function Svg({ size = 18, children, ...rest }) {
+function Svg({ size = 18, title, children, ...rest }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" {...base} {...rest}>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      {...base}
+      aria-hidden={title ? undefined : 'true'}
+      role={title ? 'img' : undefined}
+      {...rest}
+    >
+      {title ? <title>{title}</title> : null}
       {children}
     </svg>
   );
@@ -76,20 +85,20 @@ export const IconCalendar = (p) => (
 );
 
 export const IconPlay = ({ size = 18, ...rest }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" {...rest}>
+  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" {...rest}>
     <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
   </svg>
 );
 
 export const IconPause = ({ size = 18, ...rest }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" {...rest}>
+  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" {...rest}>
     <rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor" />
     <rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor" />
   </svg>
 );
 
 export const IconStop = ({ size = 18, ...rest }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" {...rest}>
+  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" {...rest}>
     <rect x="6.5" y="6.5" width="11" height="11" rx="2.4" fill="currentColor" />
   </svg>
 );

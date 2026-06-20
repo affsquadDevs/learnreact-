@@ -29,7 +29,7 @@ export default function Showcase() {
       >
         {topCols.map((c) => (
           <motion.div key={c.title} className={styles.col} variants={fadeUp}>
-            <h4>{c.title}</h4>
+            <h2>{c.title}</h2>
             <p>{c.text}</p>
           </motion.div>
         ))}
@@ -80,9 +80,9 @@ export default function Showcase() {
                 </div>
               </div>
 
-              <h3 className={styles.greeting}>
+              <p className={styles.greeting}>
                 Good morning, <strong>Alex</strong>
-              </h3>
+              </p>
 
               <div className={styles.cardsGrid}>
                 <div className={styles.todo}>
@@ -109,7 +109,7 @@ export default function Showcase() {
                     Activity <em>weekly</em>
                   </div>
                   <div className={styles.ringWrap}>
-                    <svg viewBox="0 0 120 120" className={styles.ring}>
+                    <svg viewBox="0 0 120 120" className={styles.ring} aria-hidden="true">
                       <circle cx="60" cy="60" r="50" className={styles.ringBg} />
                       <motion.circle
                         cx="60" cy="60" r="50"

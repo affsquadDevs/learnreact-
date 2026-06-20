@@ -1,12 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { modules } from '../data/course';
 import { useProgress } from '../hooks/useProgress';
 import { fadeUp, stagger, viewport, easeOut } from '../lib/motion';
 import styles from './CurriculumPreview.module.css';
 
+const MotionLink = motion.create(Link);
+
 export default function CurriculumPreview() {
-  const navigate = useNavigate();
   const { isCompleted, percent, completedCount, total } = useProgress();
 
   return (
@@ -41,11 +42,11 @@ export default function CurriculumPreview() {
           const done = m.lessons.filter((l) => isCompleted(l.id)).length;
           const pct = Math.round((done / m.lessons.length) * 100);
           return (
-            <motion.div
+            <MotionLink
               key={m.id}
+              to="/course"
               className={styles.card}
               variants={fadeUp}
-              onClick={() => navigate('/course')}
               style={{ '--accent': m.accent }}
             >
               <div className={styles.cardTop}>
@@ -64,18 +65,18 @@ export default function CurriculumPreview() {
                 />
               </div>
               <span className={styles.pctLabel}>{pct}% complete</span>
-            </motion.div>
+            </MotionLink>
           );
         })}
       </motion.div>
 
       <div className={`container ${styles.ctaRow}`}>
-        <button className="btn btn-primary" onClick={() => navigate('/course')}>
+        <Link className="btn btn-primary" to="/course">
           Open the course
-        </button>
-        <button className="btn btn-ghost" onClick={() => navigate('/roadmap')}>
+        </Link>
+        <Link className="btn btn-ghost" to="/roadmap">
           Explore the roadmap
-        </button>
+        </Link>
       </div>
     </section>
   );

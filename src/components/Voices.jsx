@@ -33,6 +33,9 @@ const quotes = [
 export default function Voices() {
   return (
     <section className={styles.section} id="voices">
+      <div className="container" style={{ textAlign: 'center', marginBottom: '46px' }}>
+        <h2 className="section-title">Loved by developers learning React</h2>
+      </div>
       <motion.div
         className={`container ${styles.statsRow}`}
         variants={stagger(0.08)}

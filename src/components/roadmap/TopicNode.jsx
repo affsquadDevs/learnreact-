@@ -39,7 +39,7 @@ export default function TopicNode({ topic, accent, soft, side, roadmap }) {
       <div className={styles.card} style={{ '--accent': accent, '--soft': soft }}>
         <button className={styles.head} onClick={() => setOpen((v) => !v)} aria-expanded={open}>
           <div className={styles.headLeft}>
-            <h4>{topic.name}</h4>
+            <h3>{topic.name}</h3>
             <span className={styles.meta}>
               {doneCount}/{total} concepts · {pct}%
             </span>
@@ -105,7 +105,7 @@ export default function TopicNode({ topic, accent, soft, side, roadmap }) {
                             style={done ? { background: accent, borderColor: accent } : undefined}
                           >
                             {done && (
-                              <svg viewBox="0 0 24 24" width="12" height="12">
+                              <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
                                 <path d="M5 12.5l4.2 4.3L19 7" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                               </svg>
                             )}
