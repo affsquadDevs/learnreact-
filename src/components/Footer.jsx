@@ -86,6 +86,12 @@ export default function Footer() {
 
       <div className={`container ${styles.bottom}`}>
         <span>© {new Date().getFullYear()} ReactWay. All rights reserved.</span>
+        <nav className={styles.legalNav} aria-label="Legal">
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms</Link>
+        </nav>
         <span className={styles.made}>Built with React ⚛</span>
       </div>
     </footer>

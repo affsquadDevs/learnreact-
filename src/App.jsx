@@ -4,6 +4,10 @@ import StudyTimerProvider from './context/StudyTimerProvider';
 import Landing from './pages/Landing';
 import Course from './pages/Course';
 import Roadmap from './pages/Roadmap';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
 import { routeMeta } from './seo';
 
@@ -33,6 +37,10 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/course" element={<StudyTimerProvider><Course /></StudyTimerProvider>} />
         <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

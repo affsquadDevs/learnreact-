@@ -19,6 +19,26 @@ export const routeMeta = {
     description:
       'Follow the ReactWay roadmap: a clear, ordered path from React fundamentals to advanced topics. Know exactly what to learn next.',
   },
+  '/about': {
+    title: 'About ReactWay — Learn React the Right Way',
+    description:
+      'ReactWay organises modern React into one deliberate learning path: a structured course, a concept roadmap, and built-in progress tracking.',
+  },
+  '/contact': {
+    title: 'Contact ReactWay',
+    description:
+      'Get in touch with the ReactWay team about the course, the roadmap, feedback, privacy requests, or advertising enquiries.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | ReactWay',
+    description:
+      'How ReactWay handles your information, including cookies, Google AdSense and third-party advertising, analytics, and your privacy choices.',
+  },
+  '/terms': {
+    title: 'Terms of Service | ReactWay',
+    description:
+      'The terms that govern your use of the ReactWay website: acceptable use, intellectual property, disclaimers, and liability.',
+  },
   404: {
     title: 'Page not found · ReactWay',
     description: 'The page you’re looking for doesn’t exist or has moved.',

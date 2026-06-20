@@ -10,6 +10,10 @@ const ROUTES = [
   { url: '/', key: '/', out: 'dist/index.html' },
   { url: '/course', key: '/course', out: 'dist/course.html' },
   { url: '/roadmap', key: '/roadmap', out: 'dist/roadmap.html' },
+  { url: '/about', key: '/about', out: 'dist/about.html' },
+  { url: '/contact', key: '/contact', out: 'dist/contact.html' },
+  { url: '/privacy', key: '/privacy', out: 'dist/privacy.html' },
+  { url: '/terms', key: '/terms', out: 'dist/terms.html' },
   // Rendered via the catch-all route; Vercel serves dist/404.html with a 404 status.
   { url: '/__not_found__', key: 404, out: 'dist/404.html' },
 ];
