@@ -51,7 +51,7 @@ export default function About() {
       <p>
         Questions, feedback or suggestions? We'd love to hear from you — visit our{' '}
         <Link to="/contact">contact page</Link> or email{' '}
-        <a href="mailto:hello@affsquad.com">hello@affsquad.com</a>.
+        <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>.
       </p>
     </PageShell>
   );
