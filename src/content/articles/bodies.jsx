@@ -2,6 +2,7 @@
    intentionally exports a keyed map of article body components, not a single component. */
 // Article bodies, keyed by slug. Rendered inside PageShell on /blog/:slug.
 // Metadata (title, description, date, etc.) lives in ./manifest.js.
+import { Link } from 'react-router-dom';
 
 function HowUseStateWorks() {
   return (
@@ -9,7 +10,8 @@ function HowUseStateWorks() {
       <p>
         State is the data a component remembers between renders. In React function components, you
         add state with the <code>useState</code> hook. It looks simple — and it is — but a few details
-        about <em>how</em> it works prevent most beginner bugs.
+        about <em>how</em> it works prevent most beginner bugs. (Not sure whether a value belongs in
+        state at all? See <Link to="/blog/props-vs-state">props vs state</Link>.)
       </p>
 
       <h2>The basics</h2>
@@ -101,7 +103,9 @@ function UseEffectExplained() {
       <p>
         <code>useEffect</code> lets a component synchronise with something outside React — a network
         request, a subscription, a timer, the document title. It's one of the most useful hooks and
-        one of the most misused. Here's a mental model that makes it predictable.
+        one of the most misused. Here's a mental model that makes it predictable. (Its most common
+        job — loading data — has its own guide:{' '}
+        <Link to="/blog/fetching-data-in-react">fetching data in React</Link>.)
       </p>
 
       <h2>What an effect is</h2>
@@ -199,7 +203,8 @@ function ThinkingInComponents() {
       <p>
         Components receive data through props — read-only inputs passed from the parent. A child
         should never change its own props; it renders based on them. This one-way flow makes data easy
-        to trace: to find where a value comes from, you look up the tree.
+        to trace: to find where a value comes from, you look up the tree. (New to the props/state
+        distinction? <Link to="/blog/props-vs-state">Props vs state</Link> covers it.)
       </p>
       <pre>{`function ProductRow({ name, price }) {
   return <tr><td>{name}</td><td>{price}</td></tr>;
@@ -244,7 +249,8 @@ function ListsAndKeys() {
     <>
       <p>
         Rendering a list in React means mapping an array to elements. It's a one-liner — but the{' '}
-        <code>key</code> prop React asks for is more important than it looks.
+        <code>key</code> prop React asks for is more important than it looks. (Showing a list only
+        sometimes? Pair this with <Link to="/blog/conditional-rendering">conditional rendering</Link>.)
       </p>
 
       <h2>Rendering a list</h2>
@@ -544,6 +550,239 @@ const doubled = count * 2;`}</pre>
   );
 }
 
+function PropsVsState() {
+  return (
+    <>
+      <p>
+        If you're new to React, "props vs state" is probably the first thing that genuinely trips you
+        up. The good news: the difference is simple once it clicks, and almost every confusing bug in
+        this area comes from blurring the line between the two.
+      </p>
+
+      <h2>Props: data passed in</h2>
+      <p>
+        Props are the values a component receives from its parent. Think of them like arguments to a
+        function — the component reads them, but it never changes them. They flow <em>down</em> the
+        tree, from parent to child.
+      </p>
+      <pre>{`function Greeting({ name }) {
+  return <h1>Hi, {name}!</h1>;
+}
+
+// the parent decides what "name" is
+<Greeting name="Ada" />`}</pre>
+      <p>
+        Because props are read-only, a component can't reach up and change what its parent handed it.
+        That one-way flow is exactly what makes React apps easy to follow — there's more on it in{' '}
+        <Link to="/blog/thinking-in-components">thinking in components</Link>.
+      </p>
+
+      <h2>State: data the component owns</h2>
+      <p>
+        State is data a component creates and controls itself — and, crucially, can change over time.
+        When state changes, the component re-renders. You add it with <code>useState</code>:
+      </p>
+      <pre>{`function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}`}</pre>
+      <p>
+        Here <code>count</code> belongs to <code>Counter</code> — nobody passed it in. For the full
+        picture of how those updates actually work, see{' '}
+        <Link to="/blog/how-usestate-works">how useState works</Link>.
+      </p>
+
+      <h2>A rule of thumb</h2>
+      <ul>
+        <li>Will the value change while the component is on screen? If not, it's probably a prop (or
+          just a constant).</li>
+        <li>Does the component itself need to change it in response to an event? That's state.</li>
+        <li>Do several components need the same value? Lift the state to their closest shared parent
+          and pass it down as props.</li>
+      </ul>
+
+      <h2>The classic mistake: copying props into state</h2>
+      <p>It's tempting to take a prop and stash it in state "so I can use it":</p>
+      <pre>{`// usually wrong — now there are two sources of truth
+function Profile({ user }) {
+  const [name, setName] = useState(user.name);
+  // if the parent later changes user.name, this copy won't notice
+}`}</pre>
+      <p>
+        Now you have two copies of the same data that can drift apart. Unless you specifically want a
+        local, editable draft — like a form field, which is its own topic in{' '}
+        <Link to="/blog/controlled-vs-uncontrolled-inputs">controlled vs uncontrolled inputs</Link> —
+        just read the prop directly. And remember: changing state re-renders the component, which is
+        worth understanding in <Link to="/blog/react-rerenders">when and why components update</Link>.
+      </p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li>Props are passed in and read-only; state is owned and changeable.</li>
+        <li>Changing state re-renders the component; you can't change props.</li>
+        <li>Don't copy props into state unless you truly need a separate local value.</li>
+      </ul>
+    </>
+  );
+}
+
+function ConditionalRendering() {
+  return (
+    <>
+      <p>
+        Real interfaces are full of "if this, then show that" — a spinner while data loads, an error
+        message when something breaks, a different button when you're logged in. React has no special
+        template syntax for this; you just use plain JavaScript. Here are the patterns worth knowing,
+        and the one gotcha that catches almost everyone.
+      </p>
+
+      <h2>Return early with an if</h2>
+      <p>
+        When a whole component should render something completely different, an early{' '}
+        <code>return</code> is the cleanest option:
+      </p>
+      <pre>{`function Profile({ user }) {
+  if (!user) {
+    return <p>Please log in.</p>;
+  }
+  return <h1>Welcome back, {user.name}</h1>;
+}`}</pre>
+
+      <h2>Ternaries for either/or</h2>
+      <p>
+        You can't use <code>if</code> inside JSX, but you can use a ternary. It's perfect for "show A
+        or B":
+      </p>
+      <pre>{`<button>{loading ? 'Saving…' : 'Save'}</button>`}</pre>
+
+      <h2>&& for "show it, or show nothing"</h2>
+      <p>
+        To render something only when a condition is true, <code>&&</code> reads nicely:
+      </p>
+      <pre>{`{error && <p className="error">{error}</p>}`}</pre>
+
+      <h2>The famous 0 gotcha</h2>
+      <p>
+        Here's the bug everyone hits eventually. With <code>&&</code>, if the left side is the number{' '}
+        <code>0</code>, React prints <code>0</code> on the page instead of rendering nothing:
+      </p>
+      <pre>{`// if items.length is 0, this shows "0" on screen!
+{items.length && <List items={items} />}
+
+// fix: give && a real boolean
+{items.length > 0 && <List items={items} />}`}</pre>
+      <p>
+        The rule: only put genuine booleans on the left of <code>&&</code>. A length or a count is a
+        number, and a <code>0</code> will happily leak onto the page.
+      </p>
+
+      <h2>Choosing between them</h2>
+      <ul>
+        <li>Whole-component branches → early <code>return</code>.</li>
+        <li>Either/or inside JSX → ternary.</li>
+        <li>Show-or-nothing → <code>&&</code> (with a real boolean).</li>
+      </ul>
+      <p>
+        Conditional rendering shows up constantly alongside lists — for example, showing an "empty"
+        message when there's nothing to map over, so it's worth reading{' '}
+        <Link to="/blog/lists-and-keys">lists and keys</Link> too. And if you're unsure where the
+        condition's data should live, <Link to="/blog/props-vs-state">props vs state</Link> has the
+        answer.
+      </p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li>It's just JavaScript: <code>if</code>, the ternary, and <code>&&</code>.</li>
+        <li>Early <code>return</code> for whole-component branches; ternary for either/or.</li>
+        <li>Guard <code>&&</code> with a real boolean so a <code>0</code> doesn't render.</li>
+      </ul>
+    </>
+  );
+}
+
+function FetchingData() {
+  return (
+    <>
+      <p>
+        Sooner or later your app needs data from somewhere — a list of posts, a user profile, search
+        results. In React, the basic tool for this is <code>useEffect</code> plus the browser's{' '}
+        <code>fetch</code>. The happy path is short; the honest version handles a few things the quick
+        tutorials skip.
+      </p>
+
+      <h2>The basic pattern</h2>
+      <p>
+        Fetch inside an effect so it runs after render, and keep three pieces of state: the data, a
+        loading flag, and any error.
+      </p>
+      <pre>{`function User({ id }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/users/' + id)
+      .then(res => res.json())
+      .then(data => setUser(data))
+      .catch(err => setError(err))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) return <p>Loading…</p>;
+  if (error) return <p>Something went wrong.</p>;
+  return <h1>{user.name}</h1>;
+}`}</pre>
+      <p>
+        Those three states are exactly what your UI needs to decide what to show. Rendering one of
+        three outcomes is a job for{' '}
+        <Link to="/blog/conditional-rendering">conditional rendering</Link>.
+      </p>
+
+      <h2>Why <code>id</code> is in the dependency array</h2>
+      <p>
+        The effect lists <code>[id]</code> as its dependency, so it re-fetches whenever{' '}
+        <code>id</code> changes. Forgetting this is a classic bug — the data loads once and never
+        updates when the prop changes. If the dependency array still feels fuzzy, the{' '}
+        <Link to="/blog/useeffect-explained">useEffect guide</Link> breaks it down.
+      </p>
+
+      <h2>The race condition nobody mentions</h2>
+      <p>
+        If <code>id</code> changes quickly, two requests can be in flight at once — and the slower one
+        might resolve last and overwrite the newer data. Guard against it with a cleanup flag:
+      </p>
+      <pre>{`useEffect(() => {
+  let active = true;
+  fetch('/api/users/' + id)
+    .then(res => res.json())
+    .then(data => {
+      if (active) setUser(data);
+    });
+  return () => {
+    active = false; // ignore a stale request's result
+  };
+}, [id]);`}</pre>
+
+      <h2>When to reach for a library</h2>
+      <p>
+        Once you need caching, refetching, or the same data in several components, hand-rolled effects
+        get repetitive fast. That's the moment to consider a data library like TanStack Query or SWR —
+        or, at the very least, to wrap your fetch logic in a reusable{' '}
+        <Link to="/blog/custom-hooks">custom hook</Link> such as <code>useUser(id)</code>.
+      </p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li>Track three things: the data, a loading flag, and an error.</li>
+        <li>Put every value the request depends on (like <code>id</code>) in the dependency array.</li>
+        <li>Use a cleanup flag to ignore stale responses and dodge race conditions.</li>
+        <li>Reach for a data library once you need caching and refetching.</li>
+      </ul>
+    </>
+  );
+}
+
 export const bodies = {
   'how-usestate-works': HowUseStateWorks,
   'useeffect-explained': UseEffectExplained,
@@ -553,4 +792,7 @@ export const bodies = {
   'custom-hooks': CustomHooks,
   'react-rerenders': ReactRerenders,
   'usememo-usecallback': UseMemoUseCallback,
+  'props-vs-state': PropsVsState,
+  'conditional-rendering': ConditionalRendering,
+  'fetching-data-in-react': FetchingData,
 };

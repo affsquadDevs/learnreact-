@@ -90,6 +90,39 @@ export const articles = [
     readingMins: 8,
     tags: ['Hooks', 'Performance'],
   },
+  {
+    slug: 'props-vs-state',
+    title: "Props vs State in React: What's the Difference?",
+    description:
+      'Props and state both hold data, but they do very different jobs. A plain-English guide to which is which, when to use each, and the mistake to avoid.',
+    excerpt:
+      'Props or state? It is the question every React beginner trips over — and the answer is simpler than it looks once you know what each one is for.',
+    date: '2026-06-19',
+    readingMins: 6,
+    tags: ['Fundamentals', 'Props', 'State'],
+  },
+  {
+    slug: 'conditional-rendering',
+    title: 'Conditional Rendering in React: Clean Patterns (and Pitfalls)',
+    description:
+      'Show, hide, and swap UI based on state using if, ternaries, and the && operator — plus the famous gotcha that renders a stray 0 on your page.',
+    excerpt:
+      'Most UIs change based on what is happening. Here are the clean ways to render conditionally in React — and the one bug that catches almost everyone.',
+    date: '2026-06-20',
+    readingMins: 6,
+    tags: ['Rendering', 'Patterns'],
+  },
+  {
+    slug: 'fetching-data-in-react',
+    title: 'Fetching Data in React with useEffect',
+    description:
+      'A practical walkthrough of loading data in React: useEffect + fetch, handling loading and error states, avoiding race conditions, and when to use a library.',
+    excerpt:
+      'Loading data is one of the first real-world things you will do in React. Here is a clean, honest pattern — including the bits quick tutorials skip.',
+    date: '2026-06-20',
+    readingMins: 8,
+    tags: ['Effects', 'Data', 'Patterns'],
+  },
 ];
 
 export const getArticle = (slug) => articles.find((a) => a.slug === slug);
