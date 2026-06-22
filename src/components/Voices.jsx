@@ -3,8 +3,8 @@ import { fadeUp, stagger, viewport } from '../lib/motion';
 import styles from './Voices.module.css';
 
 const stats = [
-  { value: '12', label: 'hands-on lessons' },
-  { value: '4', label: 'modules from basics to production' },
+  { value: '2', label: 'courses (and growing)' },
+  { value: '100+', label: 'hands-on lessons & quizzes' },
   { value: '100%', label: 'progress saved locally' },
   { value: '2k+', label: 'students in the community' },
 ];
@@ -23,10 +23,10 @@ const quotes = [
     color: '#8b5cf6',
   },
   {
-    text: 'The course structure is exactly the “right way” I was missing.',
+    text: 'I passed the AWS Cloud Practitioner exam using the course quizzes. The structure is exactly the “right way” I was missing.',
     name: 'Oleg V.',
     role: 'Self-taught dev',
-    color: '#ff9f43',
+    color: '#e8862a',
   },
 ];
 
@@ -34,7 +34,7 @@ export default function Voices() {
   return (
     <section className={styles.section} id="voices">
       <div className="container" style={{ textAlign: 'center', marginBottom: '46px' }}>
-        <h2 className="section-title">Loved by developers learning React</h2>
+        <h2 className="section-title">Loved by developers learning the web</h2>
       </div>
       <motion.div
         className={`container ${styles.statsRow}`}

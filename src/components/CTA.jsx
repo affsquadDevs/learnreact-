@@ -15,15 +15,15 @@ export default function CTA() {
       >
         <div className={styles.grid} aria-hidden="true" />
         <h2 className={styles.title}>
-          Ready to learn React
+          Ready to learn web dev
           <br /> the right way?
         </h2>
         <p className={styles.sub}>
-          Start with the first module today. Your progress is saved automatically.
+          Pick a course and start your first lesson today. Your progress is saved automatically.
         </p>
         <div className={styles.actions}>
-          <Link className={styles.primary} to="/course">
-            Go to course
+          <Link className={styles.primary} to="/courses">
+            Browse courses
           </Link>
           <a href="#curriculum" className={styles.ghost}>
             View curriculum

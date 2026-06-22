@@ -1,7 +1,7 @@
 {
-  "name": "ReactWay — The Right Way to Learn React",
-  "short_name": "ReactWay",
-  "description": "A structured, hands-on React course with progress tracking.",
+  "name": "DevWay — Learn Web Development the Right Way",
+  "short_name": "DevWay",
+  "description": "Structured, hands-on web development courses across frontend, backend and the cloud, with progress tracking.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -6,20 +6,18 @@ export default function Logo({ to = '/', onDark = false }) {
     <Link
       to={to}
       className={`${styles.logo}${onDark ? ` ${styles.onDark}` : ''}`}
-      aria-label="ReactWay home"
+      aria-label="DevWay home"
     >
       <span className={styles.mark}>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-          <g fill="none" stroke="currentColor" strokeWidth="1.4">
-            <ellipse cx="12" cy="12" rx="10" ry="4" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
+          <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3.5 17.5 9 12l3.2 3.2L20 6.5" />
+            <path d="M15 6.5h5v5" />
           </g>
-          <circle cx="12" cy="12" r="2.1" fill="currentColor" />
         </svg>
       </span>
       <span className={styles.word}>
-        React<span className={styles.accent}>Way</span>
+        Dev<span className={styles.accent}>Way</span>
       </span>
     </Link>
   );

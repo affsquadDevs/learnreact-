@@ -55,6 +55,15 @@
   width: 100%;
 }
 
+/* Current route */
+.linkActive {
+  color: var(--c-blue);
+  font-weight: 600;
+}
+.linkActive::after {
+  width: 100%;
+}
+
 .actions {
   display: flex;
   align-items: center;

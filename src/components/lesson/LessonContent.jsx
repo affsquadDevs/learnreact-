@@ -3,12 +3,14 @@ import { motion } from 'framer-motion';
 import ConceptCard from './ConceptCard';
 import LessonDoodles from './LessonDoodles';
 import { IconSparkle } from '../icons';
-import { getTopicConcepts } from '../../data/courseContent';
 import { easeOut } from '../../lib/motion';
 import styles from './LessonContent.module.css';
 
-export default function LessonContent({ topicId, accent }) {
-  const concepts = useMemo(() => getTopicConcepts(topicId), [topicId]);
+export default function LessonContent({ topicId, accent, course }) {
+  const concepts = useMemo(
+    () => course.getTopicConcepts(topicId),
+    [course, topicId]
+  );
   const [allOpen, setAllOpen] = useState(false);
 
   if (!concepts) return null;

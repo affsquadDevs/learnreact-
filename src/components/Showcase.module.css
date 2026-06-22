@@ -151,6 +151,16 @@
   border: 1px solid var(--c-line);
   padding: 6px 12px;
   border-radius: var(--r-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .topRight {
@@ -209,9 +219,10 @@
   margin-bottom: 14px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 7px;
 }
 .cardHead em {
+  margin-left: auto;
   font-style: normal;
   font-size: 11px;
   color: var(--c-blue);

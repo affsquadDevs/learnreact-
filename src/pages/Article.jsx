@@ -21,10 +21,10 @@ export default function Article() {
     description: meta.description,
     datePublished: meta.date,
     dateModified: meta.date,
-    author: { '@type': 'Organization', name: 'ReactWay', url: `${SITE}/` },
+    author: { '@type': 'Organization', name: 'DevWay', url: `${SITE}/` },
     publisher: {
       '@type': 'Organization',
-      name: 'ReactWay',
+      name: 'DevWay',
       logo: { '@type': 'ImageObject', url: `${SITE}/favicon.svg` },
     },
     mainEntityOfPage: url,

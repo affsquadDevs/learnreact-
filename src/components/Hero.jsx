@@ -74,12 +74,12 @@ export default function Hero() {
       </motion.div>
 
       <motion.div className={`${styles.card} ${styles.integrations}`} {...floatProps(1.2)}>
-        <div className={styles.intTitle}>Modern stack</div>
+        <div className={styles.intTitle}>Tracks</div>
         <div className={styles.intRow}>
-          <span style={{ background: '#61dafb22', color: '#0bbfe6' }}>JSX</span>
-          <span style={{ background: '#8b5cf622', color: '#7c4ddb' }}>Hooks</span>
-          <span style={{ background: '#ff9f4322', color: '#e8862a' }}>Router</span>
-          <span style={{ background: '#2fcc7122', color: '#1ba85a' }}>Vite</span>
+          <span style={{ background: '#2d6bff22', color: '#2d6bff' }}>Frontend</span>
+          <span style={{ background: '#1ba85a22', color: '#1ba85a' }}>Backend</span>
+          <span style={{ background: '#e8862a22', color: '#e8862a' }}>Cloud</span>
+          <span style={{ background: '#7c4ddb22', color: '#7c4ddb' }}>DevOps</span>
         </div>
       </motion.div>
 
@@ -91,34 +91,33 @@ export default function Hero() {
         animate="show"
       >
         <motion.span className="eyebrow" variants={fadeUp}>
-          <span className={styles.liveDot} /> The Right Way to Learn React
+          <span className={styles.liveDot} /> Learn web development the right way
         </motion.span>
 
         <motion.div className={styles.logoMark} variants={fadeUp}>
           <svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true">
-            <g fill="none" stroke="#2d6bff" strokeWidth="1.3">
-              <ellipse cx="12" cy="12" rx="10" ry="3.8" />
-              <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)" />
-              <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(120 12 12)" />
+            <g fill="none" stroke="#2d6bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3.5 17.5 9 12l3.2 3.2L20 6.5" />
+              <path d="M15 6.5h5v5" />
             </g>
-            <circle cx="12" cy="12" r="2" fill="#2d6bff" />
           </svg>
         </motion.div>
 
         <motion.h1 className={styles.title} variants={fadeUp}>
-          Learn React
+          Master web development
           <br />
           <span className={styles.titleMuted}>the right way</span>
         </motion.h1>
 
         <motion.p className={styles.sub} variants={fadeUp}>
-          A structured, hands-on course from JSX fundamentals to production apps.
-          Think, plan and track your learning all in one place.
+          Structured, hands-on courses across frontend, backend and the cloud —
+          from your first component to shipping production apps. Learn, practice
+          and track your progress in one place.
         </motion.p>
 
         <motion.div className={styles.ctaRow} variants={fadeUp}>
-          <Link className="btn btn-primary" to="/course">
-            Go to course
+          <Link className="btn btn-primary" to="/courses">
+            Browse courses
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path
                 d="M5 12h14m-6-6l6 6-6 6"

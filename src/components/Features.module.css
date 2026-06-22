@@ -124,6 +124,9 @@
   background: var(--c-line-2);
   border-radius: 8px;
   margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .visualRow {
@@ -206,6 +209,9 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 @media (max-width: 820px) {

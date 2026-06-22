@@ -42,7 +42,7 @@
 .miniFill {
   height: 100%;
   border-radius: 6px;
-  background: linear-gradient(90deg, var(--c-blue), var(--c-cyan));
+  background: linear-gradient(90deg, var(--rm, var(--c-blue)), color-mix(in srgb, var(--rm, var(--c-blue)) 45%, #fff));
 }
 .resetBtn {
   font-size: 13px;
@@ -58,10 +58,10 @@
 .linkBtn {
   font-size: 13px;
   font-weight: 600;
-  color: var(--c-blue);
+  color: var(--rm, var(--c-blue));
   padding: 7px 14px;
   border-radius: var(--r-pill);
-  background: var(--c-blue-soft);
+  background: color-mix(in srgb, var(--rm, var(--c-blue)) 12%, #fff);
 }
 .homeLink { font-size: 14px; font-weight: 600; color: var(--c-ink); }
 .homeLink:hover { color: var(--c-blue); }
@@ -104,7 +104,7 @@
   right: -90px;
   top: -110px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(45, 107, 255, 0.16), transparent 72%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rm, var(--c-blue)) 16%, transparent), transparent 72%);
 }
 .heroText { max-width: 680px; }
 .heroEyebrow {
@@ -122,6 +122,58 @@
   font-size: 15px;
   line-height: 1.65;
 }
+
+/* Roadmap (course) switcher */
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.switchPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-ink-2);
+  padding: 7px 15px 7px 11px;
+  border-radius: var(--r-pill);
+  background: #fff;
+  border: 1px solid var(--c-line);
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.switchPill:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--p) 45%, var(--c-line));
+}
+.switchActive {
+  color: #fff;
+  background: var(--p);
+  border-color: var(--p);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--p) 38%, transparent);
+}
+
+/* Hero heading with course badge */
+.heroHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.heroBadge {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, color-mix(in srgb, var(--rm) 75%, #fff), var(--rm));
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--rm) 38%, transparent);
+  flex-shrink: 0;
+}
+.heroHead .heroEyebrow {
+  margin-bottom: 0;
+}
 .legend {
   display: flex;
   gap: 22px;
@@ -137,7 +189,7 @@
 }
 .legend i { width: 12px; height: 12px; border-radius: 50%; }
 .lIdle { background: #fff; border: 2px solid #cfd4dd; box-sizing: border-box; }
-.lProg { background: #2d6bff; }
+.lProg { background: var(--rm, #2d6bff); }
 .lDone { background: #2fcc71; }
 
 .heroRing { text-align: center; flex-shrink: 0; }
@@ -161,7 +213,7 @@
   place-items: center;
   background:
     radial-gradient(closest-side, #fff 70%, transparent 71%),
-    conic-gradient(var(--c-blue) calc(var(--pct) * 1%), var(--c-line) 0);
+    conic-gradient(var(--rm, var(--c-blue)) calc(var(--pct) * 1%), var(--c-line) 0);
   box-shadow: var(--sh-md);
   margin: 0 auto;
 }
@@ -199,8 +251,8 @@
 }
 .spineFill {
   top: 0;
-  background: linear-gradient(180deg, #2d6bff, #61dafb 40%, #2fcc71);
-  box-shadow: 0 0 14px rgba(45, 107, 255, 0.35);
+  background: linear-gradient(180deg, var(--rm, var(--c-blue)), color-mix(in srgb, var(--rm, var(--c-blue)) 45%, #2fcc71));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--rm, var(--c-blue)) 35%, transparent);
 }
 
 .level { position: relative; margin-bottom: 18px; }

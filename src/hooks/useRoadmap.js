@@ -1,28 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import { totalConcepts } from '../data/roadmap';
-import {
-  PROGRESS_EVENT,
-  COURSE_KEY,
-  ROADMAP_KEY,
-  readSynced,
-  resetAll,
-  toggleConcept as storeToggleConcept,
-  toggleTopic as storeToggleTopic,
-} from '../lib/progressStore';
-
-function loadRoadmapState() {
-  return readSynced().roadmap;
-}
 
 /**
- * Tracks completed roadmap concepts in localStorage, synced with course lesson progress.
+ * Tracks completed roadmap concepts in localStorage, synced with course lesson
+ * progress. Course-aware: pass the course object from the registry.
  */
-export function useRoadmap() {
+export function useRoadmap(course) {
+  const { store, totalConcepts } = course;
+
   const [state, setState] = useState({ done: {} });
 
   const refresh = useCallback(() => {
-    setState(loadRoadmapState());
-  }, []);
+    setState(store.readSynced().roadmap);
+  }, [store]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only load after mount for SSR-safe hydration
@@ -31,39 +20,39 @@ export function useRoadmap() {
 
   useEffect(() => {
     const onStorage = (e) => {
-      if (e.key === ROADMAP_KEY || e.key === COURSE_KEY) refresh();
+      if (e.key === store.ROADMAP_KEY || e.key === store.COURSE_KEY) refresh();
     };
     const onSync = () => refresh();
     window.addEventListener('storage', onStorage);
-    window.addEventListener(PROGRESS_EVENT, onSync);
+    window.addEventListener(store.PROGRESS_EVENT, onSync);
     return () => {
       window.removeEventListener('storage', onStorage);
-      window.removeEventListener(PROGRESS_EVENT, onSync);
+      window.removeEventListener(store.PROGRESS_EVENT, onSync);
     };
-  }, [refresh]);
+  }, [refresh, store]);
 
   const isDone = useCallback((id) => Boolean(state.done[id]), [state.done]);
 
   const toggleConcept = useCallback(
     (id) => {
-      storeToggleConcept(id);
+      store.toggleConcept(id);
       refresh();
     },
-    [refresh]
+    [refresh, store]
   );
 
   const toggleTopic = useCallback(
     (conceptIds) => {
-      storeToggleTopic(conceptIds);
+      store.toggleTopic(conceptIds);
       refresh();
     },
-    [refresh]
+    [refresh, store]
   );
 
   const resetRoadmap = useCallback(() => {
-    resetAll();
+    store.resetAll();
     refresh();
-  }, [refresh]);
+  }, [refresh, store]);
 
   const completedCount = Object.keys(state.done).length;
   const percent = totalConcepts

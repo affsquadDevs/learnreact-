@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
 import styles from './Header.module.css';
 
 const navLinks = [
-  { label: 'Course', to: '/course' },
-  { label: 'Roadmap', to: '/roadmap' },
+  { label: 'Courses', to: '/courses' },
   { label: 'Articles', to: '/blog' },
   { label: 'Curriculum', href: '#curriculum' },
   { label: 'Features', href: '#features' },
@@ -17,6 +16,10 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  const isActive = (to) =>
+    to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(`${to}/`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -38,7 +41,12 @@ export default function Header() {
         <nav className={styles.nav}>
           {navLinks.map((l) =>
             l.to ? (
-              <Link key={l.label} to={l.to} className={styles.link}>
+              <Link
+                key={l.label}
+                to={l.to}
+                className={`${styles.link} ${isActive(l.to) ? styles.linkActive : ''}`}
+                aria-current={isActive(l.to) ? 'page' : undefined}
+              >
                 {l.label}
               </Link>
             ) : (
@@ -50,8 +58,8 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <Link className="btn btn-dark" to="/course">
-            Go to course
+          <Link className="btn btn-dark" to="/courses">
+            Browse courses
           </Link>
         </div>
 
@@ -73,7 +81,13 @@ export default function Header() {
         >
           {navLinks.map((l) =>
             l.to ? (
-              <Link key={l.label} to={l.to} onClick={() => setOpen(false)}>
+              <Link
+                key={l.label}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                aria-current={isActive(l.to) ? 'page' : undefined}
+                style={isActive(l.to) ? { color: 'var(--c-blue)', fontWeight: 600 } : undefined}
+              >
                 {l.label}
               </Link>
             ) : (
@@ -82,8 +96,8 @@ export default function Header() {
               </a>
             )
           )}
-          <Link className="btn btn-dark" to="/course" onClick={() => setOpen(false)}>
-            Go to course
+          <Link className="btn btn-dark" to="/courses" onClick={() => setOpen(false)}>
+            Browse courses
           </Link>
         </motion.div>
       )}

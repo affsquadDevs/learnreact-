@@ -1,38 +1,56 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
 
 .mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   color: #fff;
-  background: linear-gradient(135deg, var(--c-blue), #5b8bff);
-  box-shadow: 0 8px 18px rgba(45, 107, 255, 0.35);
+  background: linear-gradient(140deg, #4f86ff 0%, var(--c-blue) 45%, #3a3df0 100%);
+  box-shadow: 0 6px 16px rgba(45, 107, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+/* Subtle gloss highlight in the top corner. */
+.mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 25% 18%, rgba(255, 255, 255, 0.35), transparent 60%);
+  pointer-events: none;
 }
 
 .mark svg {
-  animation: spin 16s linear infinite;
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.logo:hover .mark {
+  transform: translateY(-1px) rotate(-3deg);
+  box-shadow: 0 10px 22px rgba(45, 107, 255, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .word {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 20px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--c-ink);
 }
 
 .accent {
-  color: var(--c-blue);
+  background: linear-gradient(120deg, var(--c-blue), #6d5bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--c-blue); /* fallback */
 }
 
 /* High-contrast variant for dark backgrounds (e.g. the footer). */
@@ -40,9 +58,15 @@
   color: #fff;
 }
 .onDark .accent {
+  background: none;
+  -webkit-text-fill-color: currentColor;
   color: var(--c-cyan);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mark svg { animation: none; }
+  .mark,
+  .logo:hover .mark {
+    transition: none;
+    transform: none;
+  }
 }

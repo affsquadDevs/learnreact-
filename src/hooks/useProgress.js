@@ -1,30 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { allLessons } from '../data/course';
-import {
-  PROGRESS_EVENT,
-  COURSE_KEY,
-  ROADMAP_KEY,
-  readSynced,
-  resetAll,
-  setLastLesson as storeSetLastLesson,
-  toggleLesson as storeToggleLesson,
-} from '../lib/progressStore';
-
-const lessonIds = new Set(allLessons.map((lesson) => lesson.id));
-
-function loadCourseState() {
-  return readSynced().course;
-}
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * Persists course progress to localStorage, synced with roadmap concept progress.
+ * Course-aware: pass the course object from the registry; each course has its own
+ * store (its own storage keys, lessons, and concept maps).
  */
-export function useProgress() {
+export function useProgress(course) {
+  const { store, allLessons } = course;
+  const lessonIds = useMemo(
+    () => new Set(allLessons.map((lesson) => lesson.id)),
+    [allLessons]
+  );
+
   const [state, setState] = useState({ completed: {}, lastLesson: null });
 
   const refresh = useCallback(() => {
-    setState(loadCourseState());
-  }, []);
+    setState(store.readSynced().course);
+  }, [store]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only load after mount for SSR-safe hydration
@@ -33,37 +25,37 @@ export function useProgress() {
 
   useEffect(() => {
     const onStorage = (e) => {
-      if (e.key === COURSE_KEY || e.key === ROADMAP_KEY) refresh();
+      if (e.key === store.COURSE_KEY || e.key === store.ROADMAP_KEY) refresh();
     };
     const onSync = () => refresh();
     window.addEventListener('storage', onStorage);
-    window.addEventListener(PROGRESS_EVENT, onSync);
+    window.addEventListener(store.PROGRESS_EVENT, onSync);
     return () => {
       window.removeEventListener('storage', onStorage);
-      window.removeEventListener(PROGRESS_EVENT, onSync);
+      window.removeEventListener(store.PROGRESS_EVENT, onSync);
     };
-  }, [refresh]);
+  }, [refresh, store]);
 
   const toggleLesson = useCallback(
     (lessonId) => {
-      storeToggleLesson(lessonId);
+      store.toggleLesson(lessonId);
       refresh();
     },
-    [refresh]
+    [refresh, store]
   );
 
   const setLastLesson = useCallback(
     (lessonId) => {
-      storeSetLastLesson(lessonId);
+      store.setLastLesson(lessonId);
       refresh();
     },
-    [refresh]
+    [refresh, store]
   );
 
   const resetProgress = useCallback(() => {
-    resetAll();
+    store.resetAll();
     refresh();
-  }, [refresh]);
+  }, [refresh, store]);
 
   const completedCount = Object.keys(state.completed).filter((id) => lessonIds.has(id)).length;
   const total = allLessons.length;

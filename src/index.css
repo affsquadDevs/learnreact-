@@ -107,6 +107,35 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Brand text selection */
+::selection {
+  background: color-mix(in srgb, var(--c-blue) 22%, transparent);
+  color: var(--c-ink);
+}
+
+/* Refined, unobtrusive scrollbars (WebKit + Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c7ccd6 transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #c7ccd6;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #aab1bf;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   margin: 0;

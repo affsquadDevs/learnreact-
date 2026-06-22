@@ -8,7 +8,7 @@ export default function Contact() {
     >
       <h2>Email</h2>
       <p>
-        The best way to reach the ReactWay team is by email. We aim to respond within 2–3 business
+        The best way to reach the DevWay team is by email. We aim to respond within 2–3 business
         days.
       </p>
       <p>
@@ -30,8 +30,8 @@ export default function Contact() {
         message data is sent or stored by this website.)
       </p>
       <p>
-        <a className="btn btn-primary" href="mailto:hello@learn-react.com?subject=ReactWay%20enquiry">
-          Email the ReactWay team
+        <a className="btn btn-primary" href="mailto:hello@learn-react.com?subject=DevWay%20enquiry">
+          Email the DevWay team
         </a>
       </p>
     </PageShell>

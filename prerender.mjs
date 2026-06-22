@@ -11,8 +11,15 @@ const STATIC_DATE = '2026-06-20';
 
 const ROUTES = [
   { url: '/', key: '/', out: 'dist/index.html', lastmod: STATIC_DATE },
+  { url: '/courses', key: '/courses', out: 'dist/courses.html', lastmod: STATIC_DATE },
   { url: '/course', key: '/course', out: 'dist/course.html', lastmod: STATIC_DATE },
+  { url: '/course/react', key: '/course/react', out: 'dist/course/react.html', lastmod: STATIC_DATE },
+  { url: '/course/aws-cloud-practitioner', key: '/course/aws-cloud-practitioner', out: 'dist/course/aws-cloud-practitioner.html', lastmod: STATIC_DATE },
+  { url: '/course/nestjs', key: '/course/nestjs', out: 'dist/course/nestjs.html', lastmod: STATIC_DATE },
   { url: '/roadmap', key: '/roadmap', out: 'dist/roadmap.html', lastmod: STATIC_DATE },
+  { url: '/roadmap/react', key: '/roadmap/react', out: 'dist/roadmap/react.html', lastmod: STATIC_DATE },
+  { url: '/roadmap/aws-cloud-practitioner', key: '/roadmap/aws-cloud-practitioner', out: 'dist/roadmap/aws-cloud-practitioner.html', lastmod: STATIC_DATE },
+  { url: '/roadmap/nestjs', key: '/roadmap/nestjs', out: 'dist/roadmap/nestjs.html', lastmod: STATIC_DATE },
   { url: '/about', key: '/about', out: 'dist/about.html', lastmod: STATIC_DATE },
   { url: '/contact', key: '/contact', out: 'dist/contact.html', lastmod: STATIC_DATE },
   { url: '/privacy', key: '/privacy', out: 'dist/privacy.html', lastmod: STATIC_DATE },
@@ -50,6 +57,8 @@ function headTags(meta, canonicalPath) {
 }
 
 mkdirSync('dist/blog', { recursive: true });
+mkdirSync('dist/course', { recursive: true });
+mkdirSync('dist/roadmap', { recursive: true });
 
 for (const r of ROUTES) {
   const meta = routeMeta[r.key] || routeMeta[404];

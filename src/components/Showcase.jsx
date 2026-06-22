@@ -1,5 +1,15 @@
 import { motion } from 'framer-motion';
 import { fadeUp, stagger, viewport, easeOut } from '../lib/motion';
+import {
+  IconHome,
+  IconSearch,
+  IconBell,
+  IconCalendar,
+  IconList,
+  IconPause,
+  IconStop,
+  IconCheck,
+} from './icons';
 import styles from './Showcase.module.css';
 
 const topCols = [
@@ -9,13 +19,15 @@ const topCols = [
   },
   {
     title: 'Practice right away',
-    text: 'Every module ends with a task that locks in the theory with real code.',
+    text: 'Every lesson ends with quizzes and tasks that lock in the theory with real code.',
   },
   {
     title: 'See your progress',
     text: 'The dashboard shows what’s done and what’s worth revisiting right now.',
   },
 ];
+
+const navDot = (color) => <span className={styles.navDot} style={{ background: color }} />;
 
 export default function Showcase() {
   return (
@@ -48,25 +60,25 @@ export default function Showcase() {
             <aside className={styles.sidebar}>
               <div className={styles.brandRow}>
                 <span className={styles.brandMark} />
-                ReactWay
+                DevWay
               </div>
               <button className={styles.createBtn}>+ Create</button>
-              <span className={styles.navLabel}>Modules</span>
+              <span className={styles.navLabel}>Tracks</span>
               <ul>
-                <li className={styles.active}>🏠 Dashboard</li>
-                <li>🔵 Foundations</li>
-                <li>🟣 State & Hooks</li>
-                <li>🟠 Production</li>
+                <li className={styles.active}><IconHome size={15} /> Dashboard</li>
+                <li>{navDot('#2d6bff')} Frontend</li>
+                <li>{navDot('#1ba85a')} Backend</li>
+                <li>{navDot('#e8862a')} Cloud</li>
               </ul>
             </aside>
 
             {/* Main */}
             <div className={styles.main}>
               <div className={styles.topbar}>
-                <span className={styles.dateChip}>📅 Today, June 18</span>
+                <span className={styles.dateChip}><IconCalendar size={14} /> Today, June 18</span>
                 <div className={styles.topRight}>
-                  <span className={styles.iconBtn}>🔍</span>
-                  <span className={styles.iconBtn}>🔔</span>
+                  <span className={styles.iconBtn}><IconSearch size={15} /></span>
+                  <span className={styles.iconBtn}><IconBell size={15} /></span>
                 </div>
               </div>
 
@@ -76,12 +88,12 @@ export default function Showcase() {
 
               <div className={styles.cardsGrid}>
                 <div className={styles.todo}>
-                  <div className={styles.cardHead}>📝 Today’s plan</div>
+                  <div className={styles.cardHead}><IconList size={15} /> Today’s plan</div>
                   <ul className={styles.todoList}>
-                    <li className={styles.done}>Review useState and events</li>
-                    <li className={styles.done}>Finish the useEffect lesson</li>
-                    <li>Do the custom hooks exercise</li>
-                    <li>Start the routing module</li>
+                    <li className={styles.done}>Review components and props</li>
+                    <li className={styles.done}>Finish the REST API lesson</li>
+                    <li>Do the IAM roles exercise</li>
+                    <li>Start the deployment module</li>
                   </ul>
                 </div>
 
@@ -89,8 +101,8 @@ export default function Showcase() {
                   <div className={styles.cardHead}>Study time</div>
                   <div className={styles.timerValue}>04:21:58</div>
                   <div className={styles.timerCtrl}>
-                    <span className={styles.pauseBtn}>❚❚</span>
-                    <span className={styles.stopBtn}>■</span>
+                    <span className={styles.pauseBtn}><IconPause size={13} /></span>
+                    <span className={styles.stopBtn}><IconStop size={12} /></span>
                   </div>
                 </div>
 
@@ -138,9 +150,9 @@ export default function Showcase() {
                   <span>Completed</span>
                 </div>
                 {[
-                  { c: '#2d6bff', t: 'State & Interactivity', p: 60 },
-                  { c: '#8b5cf6', t: 'Effects & Data', p: 27 },
-                  { c: '#ff9f43', t: 'Production Patterns', p: 95 },
+                  { c: '#2d6bff', t: 'React Fundamentals', p: 60 },
+                  { c: '#8b5cf6', t: 'APIs & Backend', p: 27 },
+                  { c: '#e8862a', t: 'Cloud Practitioner', p: 95 },
                 ].map((r) => (
                   <div key={r.t} className={styles.assignedRow}>
                     <span className={styles.rowDot} style={{ background: r.c }} />
@@ -167,7 +179,7 @@ export default function Showcase() {
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            ✓
+            <IconCheck size={20} />
           </motion.div>
         </div>
       </motion.div>

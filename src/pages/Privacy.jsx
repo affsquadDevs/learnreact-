@@ -6,11 +6,11 @@ export default function Privacy() {
   return (
     <PageShell
       title="Privacy Policy"
-      lead="This policy explains what information ReactWay collects, how it is used, and the choices you have — including how advertising and cookies work on this site."
+      lead="This policy explains what information DevWay collects, how it is used, and the choices you have — including how advertising and cookies work on this site."
       updated="June 20, 2026"
     >
       <p>
-        This Privacy Policy describes how ReactWay ("ReactWay", "we", "us", or "our") handles
+        This Privacy Policy describes how DevWay ("DevWay", "we", "us", or "our") handles
         information in connection with the website at this domain (the "Site"). By using the Site you
         agree to the practices described here. If you do not agree, please discontinue use of the
         Site.
@@ -156,7 +156,7 @@ export default function Privacy() {
         For any questions or requests regarding this Privacy Policy or your data, contact us at:
       </p>
       <address>
-        ReactWay<br />
+        DevWay<br />
         Email: <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>
       </address>
     </PageShell>

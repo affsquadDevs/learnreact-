@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Logo from '../components/Logo';
 import StudyTimer from '../components/StudyTimer';
@@ -17,8 +17,7 @@ import {
   IconStop,
 } from '../components/icons';
 import LessonContent from '../components/lesson/LessonContent';
-import { modules, allLessons, courseMeta } from '../data/course';
-import { hasContent } from '../data/courseContent';
+import { getCourse } from '../data/courses';
 import { useProgress } from '../hooks/useProgress';
 import { useStudyTimerContext } from '../context/StudyTimerContext';
 import { easeOut } from '../lib/motion';
@@ -35,7 +34,11 @@ function todayLabel() {
 }
 
 export default function Course() {
-  const progress = useProgress();
+  const { courseId } = useParams();
+  const course = getCourse(courseId);
+  const { modules, allLessons, hasContent } = course;
+
+  const progress = useProgress(course);
   const timer = useStudyTimerContext();
   const {
     isCompleted,
@@ -54,22 +57,18 @@ export default function Course() {
   const [query, setQuery] = useState('');
   const [bellOpen, setBellOpen] = useState(false);
 
-  const searchResults = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return allLessons
-      .filter(
-        (l) =>
-          l.title.toLowerCase().includes(q) ||
-          l.moduleTitle.toLowerCase().includes(q)
-      )
-      .slice(0, 6);
-  }, [query]);
+  const q = query.trim().toLowerCase();
+  const searchResults = q
+    ? allLessons
+        .filter(
+          (l) =>
+            l.title.toLowerCase().includes(q) ||
+            l.moduleTitle.toLowerCase().includes(q)
+        )
+        .slice(0, 6)
+    : [];
 
-  const activeLesson = useMemo(
-    () => allLessons.find((l) => l.id === activeId) ?? allLessons[0],
-    [activeId]
-  );
+  const activeLesson = allLessons.find((l) => l.id === activeId) ?? allLessons[0];
 
   const activeIndex = allLessons.findIndex((l) => l.id === activeLesson.id);
   const prev = allLessons[activeIndex - 1];
@@ -146,7 +145,7 @@ export default function Course() {
           <div className={styles.topLeft}>
             <Logo />
             <span className={styles.divider} />
-            <span className={styles.courseTag}>{courseMeta.title}</span>
+            <span className={styles.courseTag}>{course.title}</span>
           </div>
           <div className={styles.topRight}>
             <StudyTimer />
@@ -163,7 +162,8 @@ export default function Course() {
             <button type="button" className={styles.resetBtn} onClick={handleReset}>
               Reset
             </button>
-            <Link to="/roadmap" className={styles.roadmapLink}>Roadmap</Link>
+            <Link to={`/roadmap/${course.id}`} className={styles.roadmapLink}>Roadmap</Link>
+            <Link to="/courses" className={styles.roadmapLink}>Courses</Link>
             <Link to="/" className={styles.homeLink}>Home</Link>
           </div>
         </div>
@@ -199,15 +199,20 @@ export default function Course() {
                       <li key={l.id}>
                         <div
                           className={`${styles.lessonItem} ${active ? styles.lessonItemActive : ''}`}
+                          style={active ? { background: `${m.accent}14` } : undefined}
                         >
-                          {active && (
-                            <motion.span
-                              layoutId="lessonActiveBar"
-                              className={styles.activeBar}
-                              style={{ background: m.accent }}
-                              transition={{ duration: 0.3, ease: easeOut }}
-                            />
-                          )}
+                          <AnimatePresence initial={false}>
+                            {active && (
+                              <motion.span
+                                className={styles.activeBar}
+                                style={{ background: m.accent }}
+                                initial={{ opacity: 0, scaleY: 0.3 }}
+                                animate={{ opacity: 1, scaleY: 1 }}
+                                exit={{ opacity: 0, scaleY: 0.3 }}
+                                transition={{ duration: 0.18, ease: easeOut }}
+                              />
+                            )}
+                          </AnimatePresence>
                           <button
                             type="button"
                             className={styles.checkBtn}
@@ -215,17 +220,20 @@ export default function Course() {
                             aria-pressed={completed}
                             aria-label={completed ? 'Mark as not done' : 'Mark as done'}
                           >
-                            <span
+                            <motion.span
                               className={`${styles.check} ${completed ? styles.checkOn : ''}`}
                               style={completed ? { background: m.accent, borderColor: m.accent } : undefined}
+                              animate={completed ? { scale: [1, 1.18, 1] } : { scale: 1 }}
+                              transition={{ duration: 0.26, ease: easeOut }}
                             >
                               {completed && <IconCheck size={12} />}
-                            </span>
+                            </motion.span>
                           </button>
                           <button
                             type="button"
                             className={styles.lessonOpen}
                             onClick={() => openLesson(l.id)}
+                            style={active ? { color: m.accent, fontWeight: 600 } : undefined}
                           >
                             {l.title}
                           </button>
@@ -578,7 +586,7 @@ export default function Course() {
                 )}
 
                 {hasContent(activeLesson.id) ? (
-                  <LessonContent topicId={activeLesson.id} accent={activeLesson.accent} />
+                  <LessonContent topicId={activeLesson.id} accent={activeLesson.accent} course={course} />
                 ) : (
                   <>
                     <div className={styles.lessonGrid}>

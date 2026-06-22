@@ -1,14 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Logo from '../components/Logo';
+import TechLogo from '../components/TechLogo';
 import TopicNode from '../components/roadmap/TopicNode';
-import { levels, roadmapMeta } from '../data/roadmap';
+import { getCourse, courses } from '../data/courses';
 import { useRoadmap } from '../hooks/useRoadmap';
 import { easeOut, fadeUp, stagger, viewport } from '../lib/motion';
 import styles from './Roadmap.module.css';
 
 export default function Roadmap() {
-  const roadmap = useRoadmap();
+  const { courseId } = useParams();
+  const course = getCourse(courseId);
+  const { levels, roadmapMeta } = course;
+  const themeVars = { '--rm': course.accent, '--rm-soft': course.soft };
+
+  const roadmap = useRoadmap(course);
   const { percent, completedCount, total, resetRoadmap, isDone } = roadmap;
 
   const handleReset = () => {
@@ -20,7 +26,7 @@ export default function Roadmap() {
   let topicCounter = 0;
 
   return (
-    <div className={styles.page}>
+    <div className={styles.page} style={themeVars}>
       {/* Top bar */}
       <header className={styles.topbar}>
         <div className={`container ${styles.topInner}`}>
@@ -41,7 +47,8 @@ export default function Roadmap() {
               <span>{completedCount}/{total} · {percent}%</span>
             </div>
             <button className={styles.resetBtn} onClick={handleReset}>Reset</button>
-            <Link to="/course" className={styles.linkBtn}>Course</Link>
+            <Link to={`/course/${course.id}`} className={styles.linkBtn}>Course</Link>
+            <Link to="/courses" className={styles.linkBtn}>Courses</Link>
             <Link to="/" className={styles.homeLink}>← Home</Link>
           </div>
         </div>
@@ -89,9 +96,32 @@ export default function Roadmap() {
             initial="hidden"
             animate="show"
           >
-            <motion.span className={`eyebrow ${styles.heroEyebrow}`} variants={fadeUp}>
-              core react + react-dom
-            </motion.span>
+            <motion.div className={styles.switcher} variants={fadeUp} role="tablist" aria-label="Choose a roadmap">
+              {courses.map((c) => {
+                const on = c.id === course.id;
+                return (
+                  <Link
+                    key={c.id}
+                    to={`/roadmap/${c.id}`}
+                    role="tab"
+                    aria-selected={on}
+                    className={`${styles.switchPill} ${on ? styles.switchActive : ''}`}
+                    style={{ '--p': c.accent }}
+                  >
+                    <TechLogo name={c.icon} size={17} color={on ? '#fff' : c.accent} />
+                    {c.tech}
+                  </Link>
+                );
+              })}
+            </motion.div>
+            <motion.div className={styles.heroHead} variants={fadeUp}>
+              <span className={styles.heroBadge}>
+                <TechLogo name={course.icon} size={26} color="#fff" />
+              </span>
+              <span className={`eyebrow ${styles.heroEyebrow}`}>
+                {course.tech} · {course.category}
+              </span>
+            </motion.div>
             <motion.h1 variants={fadeUp}>{roadmapMeta.title}</motion.h1>
             <motion.p variants={fadeUp}>{roadmapMeta.description}</motion.p>
             <motion.div className={styles.legend} variants={fadeUp}>
@@ -197,7 +227,7 @@ export default function Roadmap() {
               <span className={percent === 100 ? styles.finishDone : ''}>
                 {percent === 100 ? '🏆' : '🏁'}
               </span>
-              <p>{percent === 100 ? 'React mastered!' : 'Finish line'}</p>
+              <p>{percent === 100 ? `${course.tech} mastered!` : 'Finish line'}</p>
             </motion.div>
           </div>
         </div>

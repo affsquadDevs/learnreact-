@@ -4,32 +4,33 @@ import styles from './Footer.module.css';
 
 const cols = [
   {
-    title: 'Course',
+    title: 'Courses',
     links: [
-      { label: 'Curriculum', href: '#curriculum' },
-      { label: 'All modules', to: '/course' },
-      { label: 'Roadmap', to: '/roadmap' },
-      { label: 'Articles', to: '/blog' },
+      { label: 'All courses', to: '/courses' },
+      { label: 'React', to: '/course/react' },
+      { label: 'AWS Cloud Practitioner', to: '/course/aws-cloud-practitioner' },
+      { label: 'AWS roadmap', to: '/roadmap/aws-cloud-practitioner' },
     ],
   },
   {
     title: 'Explore',
     links: [
+      { label: 'Curriculum', href: '#curriculum' },
       { label: 'Features', href: '#features' },
       { label: 'How it works', href: '#how' },
-      { label: 'Reviews', href: '#voices' },
+      { label: 'Articles', to: '/blog' },
     ],
   },
   {
-    title: 'React',
+    title: 'Resources',
     links: [
       { label: 'React docs', href: 'https://react.dev', external: true },
-      { label: 'React Router', href: 'https://reactrouter.com', external: true },
+      { label: 'AWS docs', href: 'https://docs.aws.amazon.com', external: true },
     ],
   },
 ];
 
-// TODO: swap these for ReactWay's real social profile URLs.
+// TODO: swap these for DevWay's real social profile URLs.
 const socials = [
   { label: 'GitHub', short: 'Gh', href: 'https://github.com' },
   { label: 'X (Twitter)', short: 'X', href: 'https://x.com' },
@@ -43,13 +44,13 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.brandCol}>
           <Logo onDark />
-          <p>Learn React in a structured way, with practice and progress tracking.</p>
+          <p>Learn web development in a structured way, across frontend, backend and the cloud — with practice and progress tracking.</p>
           <div className={styles.socials}>
             {socials.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
-                aria-label={`ReactWay on ${s.label}`}
+                aria-label={`DevWay on ${s.label}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -86,14 +87,14 @@ export default function Footer() {
       </div>
 
       <div className={`container ${styles.bottom}`}>
-        <span>© {new Date().getFullYear()} ReactWay. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} DevWay. All rights reserved.</span>
         <nav className={styles.legalNav} aria-label="Legal">
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy Policy</Link>
           <Link to="/terms">Terms</Link>
         </nav>
-        <span className={styles.made}>Built with React ⚛</span>
+        <span className={styles.made}>Built with React</span>
       </div>
     </footer>
   );

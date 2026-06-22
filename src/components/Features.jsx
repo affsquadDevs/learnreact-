@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { fadeUp, stagger, viewport } from '../lib/motion';
+import { IconCalendar, IconClock } from './icons';
 import styles from './Features.module.css';
 
 export default function Features() {
@@ -58,8 +59,8 @@ export default function Features() {
             </div>
             <div className={styles.schedule}>
               <div className={styles.schTitle}>Weekly schedule</div>
-              {['Mon · useState', 'Wed · useEffect', 'Fri · Routing'].map((s) => (
-                <div key={s} className={styles.schRow}>🗓 {s}</div>
+              {['Mon · React hooks', 'Wed · REST APIs', 'Fri · AWS IAM'].map((s) => (
+                <div key={s} className={styles.schRow}><IconCalendar size={13} /> {s}</div>
               ))}
             </div>
           </div>
@@ -101,7 +102,7 @@ export default function Features() {
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
             >
-              04:21 ❚❚ ■
+              <IconClock size={14} /> 04:21
             </motion.span>
             <span className={styles.chip}>Widgets</span>
             <span className={styles.chip}>Lesson view</span>

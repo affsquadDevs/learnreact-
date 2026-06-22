@@ -4,21 +4,21 @@ export default function Terms() {
   return (
     <PageShell
       title="Terms of Service"
-      lead="These terms govern your use of the ReactWay website. Please read them carefully."
+      lead="These terms govern your use of the DevWay website. Please read them carefully."
       updated="June 20, 2026"
     >
       <h2>1. Acceptance of terms</h2>
       <p>
-        By accessing or using the ReactWay website (the "Site"), you agree to be bound by these Terms
+        By accessing or using the DevWay website (the "Site"), you agree to be bound by these Terms
         of Service and our <a href="/privacy">Privacy Policy</a>. If you do not agree, please do not
         use the Site.
       </p>
 
       <h2>2. The service</h2>
       <p>
-        ReactWay provides educational content about React, including a structured course, a learning
-        roadmap, and progress tracking. The content is provided for general informational and
-        educational purposes only.
+        DevWay provides educational content about web development (including React and AWS),
+        with structured courses, learning roadmaps, and progress tracking. The content is provided
+        for general informational and educational purposes only.
       </p>
 
       <h2>3. Use of the Site</h2>
@@ -34,9 +34,9 @@ export default function Terms() {
 
       <h2>4. Intellectual property</h2>
       <p>
-        The Site and its original content, features, and design are owned by ReactWay and are
+        The Site and its original content, features, and design are owned by DevWay and are
         protected by intellectual property laws. "React" and related marks are the property of their
-        respective owners; ReactWay is an independent educational resource and is not affiliated with
+        respective owners; DevWay is an independent educational resource and is not affiliated with
         or endorsed by them.
       </p>
 
@@ -57,7 +57,7 @@ export default function Terms() {
 
       <h2>7. Limitation of liability</h2>
       <p>
-        To the fullest extent permitted by law, ReactWay shall not be liable for any indirect,
+        To the fullest extent permitted by law, DevWay shall not be liable for any indirect,
         incidental, special, consequential, or punitive damages, or any loss of data, arising out of
         or related to your use of (or inability to use) the Site.
       </p>

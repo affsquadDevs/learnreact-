@@ -14,6 +14,7 @@ import {
 } from '../icons';
 import { easeOut } from '../../lib/motion';
 import Mermaid from '../Mermaid';
+import AwsIcon from '../AwsIcon';
 import Exercise from './Exercise';
 import styles from './LessonContent.module.css';
 
@@ -86,6 +87,17 @@ export default function ConceptCard({ concept, index, accent, defaultOpen }) {
               <div className={styles.conceptInner}>
               {concept.summary && (
                 <p className={styles.lead}>{concept.summary}</p>
+              )}
+
+              {concept.services?.length > 0 && (
+                <div className={styles.services} aria-label="Services covered">
+                  {concept.services.map((s) => (
+                    <span key={`${s.icon}-${s.label}`} className={styles.serviceItem}>
+                      <AwsIcon name={s.icon} size={42} />
+                      <span className={styles.serviceLabel}>{s.label}</span>
+                    </span>
+                  ))}
+                </div>
               )}
 
               {concept.explanation && (

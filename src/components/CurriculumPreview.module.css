@@ -63,6 +63,15 @@
   color: var(--accent);
 }
 
+.icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--accent) 12%, #fff);
+}
+
 .badge {
   font-size: 11.5px;
   font-weight: 600;

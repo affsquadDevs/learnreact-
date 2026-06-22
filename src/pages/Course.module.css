@@ -246,6 +246,7 @@
   transition: background 0.16s ease;
 }
 .lessonItem:hover { background: var(--c-line-2); }
+/* Active background + text colour are set inline per module accent. */
 .lessonItemActive { background: var(--c-blue-soft); }
 
 .checkBtn {
@@ -272,16 +273,14 @@
   text-overflow: ellipsis;
   transition: color 0.16s ease;
 }
-.lessonItemActive .lessonOpen { color: var(--c-blue); font-weight: 600; }
-
 .activeBar {
   position: absolute;
   left: 6px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 7px;
+  bottom: 7px;
   width: 3px;
-  height: 18px;
   border-radius: 3px;
+  transform-origin: center;
 }
 
 .check {

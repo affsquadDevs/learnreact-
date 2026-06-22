@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import StudyTimerProvider from './context/StudyTimerProvider';
 import Landing from './pages/Landing';
+import Courses from './pages/Courses';
 import Course from './pages/Course';
 import Roadmap from './pages/Roadmap';
 import About from './pages/About';
@@ -16,6 +17,22 @@ import { routeMeta } from './seo';
 // Pages are imported eagerly so the server prerender (renderToString) produces the
 // full HTML for each route synchronously. The router lives in the entry files
 // (BrowserRouter on the client, StaticRouter on the server).
+// Remount Course/Roadmap when the course in the URL changes so per-course
+// view state (active lesson, filters) resets cleanly between courses.
+function CourseRoute() {
+  const { courseId } = useParams();
+  return (
+    <StudyTimerProvider>
+      <Course key={courseId || 'default'} />
+    </StudyTimerProvider>
+  );
+}
+
+function RoadmapRoute() {
+  const { courseId } = useParams();
+  return <Roadmap key={courseId || 'default'} />;
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -37,8 +54,12 @@ export default function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/course" element={<StudyTimerProvider><Course /></StudyTimerProvider>} />
-        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/courses" element={<Courses />} />
+        {/* Bare /course and /roadmap don't favour any single course — send to the catalog. */}
+        <Route path="/course" element={<Navigate to="/courses" replace />} />
+        <Route path="/course/:courseId" element={<CourseRoute />} />
+        <Route path="/roadmap" element={<Navigate to="/courses" replace />} />
+        <Route path="/roadmap/:courseId" element={<RoadmapRoute />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
