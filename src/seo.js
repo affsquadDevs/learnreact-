@@ -89,6 +89,73 @@ export const routeMeta = {
   },
 };
 
+// AWS certification courses (added in bulk). Course pages are noindex (thin/duplicate
+// intent across many certs); per-course roadmap pages are indexable. Keep this list in
+// sync with the registry in src/data/courses/index.js and the routes in prerender.mjs.
+const awsCerts = [
+  {
+    id: 'aws-ai-practitioner', code: 'AIF-C01', name: 'AWS Certified AI Practitioner',
+    course: 'AI & ML fundamentals, generative AI, foundation models, prompt engineering & RAG, responsible AI, and AI security & governance',
+    roadmap: 'the five AIF-C01 domains: AI & ML fundamentals, generative AI, applications of foundation models, responsible AI, and security & governance',
+  },
+  {
+    id: 'aws-solutions-architect-associate', code: 'SAA-C03', name: 'AWS Certified Solutions Architect – Associate',
+    course: 'designing secure, resilient, high-performing and cost-optimized architectures — IAM, VPC, encryption, HA/DR, decoupling, data stores, performance and cost',
+    roadmap: 'the four SAA-C03 domains: secure, resilient, high-performing and cost-optimized architectures',
+  },
+  {
+    id: 'aws-developer-associate', code: 'DVA-C02', name: 'AWS Certified Developer – Associate',
+    course: 'developing with AWS services (Lambda, API Gateway, DynamoDB, S3, messaging), application security, deployment with CI/CD and IaC, and troubleshooting & optimization',
+    roadmap: 'the four DVA-C02 domains: development with AWS services, security, deployment, and troubleshooting & optimization',
+  },
+  {
+    id: 'aws-cloudops-associate', code: 'SOA-C02', name: 'AWS Certified CloudOps Engineer – Associate',
+    course: 'monitoring, logging & remediation, reliability & business continuity, deployment & automation, security & compliance, networking, and cost & performance optimization',
+    roadmap: 'the six SOA-C02 domains spanning monitoring, reliability, automation, security, networking, and cost & performance',
+  },
+  {
+    id: 'aws-data-engineer-associate', code: 'DEA-C01', name: 'AWS Certified Data Engineer – Associate',
+    course: 'data ingestion & transformation (Kinesis, Glue, EMR, Athena), data store management (S3 data lakes, Redshift, DynamoDB), data operations, and data security & governance',
+    roadmap: 'the four DEA-C01 domains: ingestion & transformation, data store management, data operations & support, and data security & governance',
+  },
+  {
+    id: 'aws-ml-engineer-associate', code: 'MLA-C01', name: 'AWS Certified Machine Learning Engineer – Associate',
+    course: 'data preparation for ML, model development with SageMaker, deployment & orchestration of ML workflows, and ML monitoring, maintenance & security',
+    roadmap: 'the four MLA-C01 domains: data preparation, model development, deployment & orchestration, and monitoring, maintenance & security',
+  },
+  {
+    id: 'aws-solutions-architect-professional', code: 'SAP-C02', name: 'AWS Certified Solutions Architect – Professional',
+    course: 'designing for organizational complexity, designing new solutions at scale, continuous improvement of existing solutions, and accelerating migration & modernization',
+    roadmap: 'the four SAP-C02 domains: organizational complexity, new solutions, continuous improvement, and migration & modernization',
+  },
+  {
+    id: 'aws-devops-engineer-professional', code: 'DOP-C02', name: 'AWS Certified DevOps Engineer – Professional',
+    course: 'SDLC automation & CI/CD, configuration management & IaC, resilient cloud solutions, monitoring & logging, incident & event response, and security & compliance',
+    roadmap: 'the six DOP-C02 domains spanning SDLC automation, IaC, resilient solutions, monitoring, incident response, and security',
+  },
+  {
+    id: 'aws-advanced-networking-specialty', code: 'ANS-C01', name: 'AWS Certified Advanced Networking – Specialty',
+    course: 'network design (VPC, hybrid connectivity, DNS), implementation (Transit Gateway, Direct Connect, VPN, load balancing), management & operation, and network security',
+    roadmap: 'the four ANS-C01 domains: network design, implementation, management & operation, and security, compliance & governance',
+  },
+  {
+    id: 'aws-security-specialty', code: 'SCS-C02', name: 'AWS Certified Security – Specialty',
+    course: 'threat detection & incident response, security logging & monitoring, infrastructure security, identity & access management, data protection (KMS), and security governance',
+    roadmap: 'the six SCS-C02 domains spanning threat detection, logging & monitoring, infrastructure security, IAM, data protection, and governance',
+  },
+];
+for (const c of awsCerts) {
+  routeMeta[`/course/${c.id}`] = {
+    title: `${c.name} Course (${c.code}) | DevWay`,
+    description: `Prepare for the ${c.name} (${c.code}) exam: ${c.course} — with diagrams, quizzes and hands-on tasks.`,
+    noindex: true,
+  };
+  routeMeta[`/roadmap/${c.id}`] = {
+    title: `${c.name} Roadmap (${c.code}) | DevWay`,
+    description: `A step-by-step roadmap to the ${c.name} exam, ordered by ${c.roadmap}.`,
+  };
+}
+
 // Blog index + one entry per article (keeps client titles and prerendered <head> in sync).
 routeMeta['/blog'] = {
   title: 'React Articles & Guides | DevWay',

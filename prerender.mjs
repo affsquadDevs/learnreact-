@@ -20,6 +20,23 @@ const ROUTES = [
   { url: '/roadmap/react', key: '/roadmap/react', out: 'dist/roadmap/react.html', lastmod: STATIC_DATE },
   { url: '/roadmap/aws-cloud-practitioner', key: '/roadmap/aws-cloud-practitioner', out: 'dist/roadmap/aws-cloud-practitioner.html', lastmod: STATIC_DATE },
   { url: '/roadmap/nestjs', key: '/roadmap/nestjs', out: 'dist/roadmap/nestjs.html', lastmod: STATIC_DATE },
+  // AWS certification courses (bulk). Each adds a /course/<id> and /roadmap/<id> page.
+  // Keep in sync with the registry in src/data/courses/index.js and meta in src/seo.js.
+  ...[
+    'aws-ai-practitioner',
+    'aws-solutions-architect-associate',
+    'aws-developer-associate',
+    'aws-cloudops-associate',
+    'aws-data-engineer-associate',
+    'aws-ml-engineer-associate',
+    'aws-solutions-architect-professional',
+    'aws-devops-engineer-professional',
+    'aws-advanced-networking-specialty',
+    'aws-security-specialty',
+  ].flatMap((id) => [
+    { url: `/course/${id}`, key: `/course/${id}`, out: `dist/course/${id}.html`, lastmod: STATIC_DATE },
+    { url: `/roadmap/${id}`, key: `/roadmap/${id}`, out: `dist/roadmap/${id}.html`, lastmod: STATIC_DATE },
+  ]),
   { url: '/about', key: '/about', out: 'dist/about.html', lastmod: STATIC_DATE },
   { url: '/contact', key: '/contact', out: 'dist/contact.html', lastmod: STATIC_DATE },
   { url: '/privacy', key: '/privacy', out: 'dist/privacy.html', lastmod: STATIC_DATE },
