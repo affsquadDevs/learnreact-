@@ -7,6 +7,7 @@ import { createCourse } from './factory';
 import reactContent from '../courseContent.json';
 import awsContent from './awsCloudPractitioner.content';
 import nestContent from './nestjs.content';
+import devopsContent from './devops.content';
 import awsAiContent from './aiPractitioner.content';
 import awsSaaContent from './solutionsArchitectAssociate.content';
 import awsDvaContent from './developerAssociate.content';
@@ -17,6 +18,15 @@ import awsSapContent from './solutionsArchitectProfessional.content';
 import awsDopContent from './devOpsEngineerProfessional.content';
 import awsAnsContent from './advancedNetworkingSpecialty.content';
 import awsScsContent from './securitySpecialty.content';
+import kubernetesContent from './kubernetes.content';
+import dockerContent from './docker.content';
+import networkingContent from './networking.content';
+import linuxContent from './linux.content';
+import gitContent from './git.content';
+import javascriptContent from './javascript.content';
+import typescriptContent from './typescript.content';
+import nodejsContent from './nodejs.content';
+import expressContent from './express.content';
 
 // React keeps its original localStorage keys so existing learner progress is
 // preserved. New courses use namespaced keys derived from their id.
@@ -102,6 +112,34 @@ const nestCourse = createCourse(
       'A step-by-step path through NestJS: fundamentals (modules, controllers, providers, DI), building HTTP APIs and the request lifecycle, data & architecture, and advanced production topics.',
   },
   nestContent
+);
+
+const devopsCourse = createCourse(
+  {
+    id: 'devops',
+    slug: 'devops',
+    title: 'DevOps: Culture, CI/CD, Infrastructure and Reliability',
+    shortTitle: 'DevOps',
+    subtitle:
+      'A comprehensive DevOps path — from culture and collaboration to CI/CD, infrastructure as code, containers, cloud delivery, observability and reliability.',
+    tech: 'DevOps',
+    category: 'Cloud / DevOps',
+    icon: 'devops',
+    accent: '#f97316',
+    soft: '#fff0e6',
+    level: 'Beginner → Advanced',
+    duration: '~30 hours',
+    status: 'available',
+    summary:
+      'Learn DevOps end to end: culture and DORA metrics, continuous integration and delivery, infrastructure as code with Terraform and Ansible, containers and Kubernetes, and observability, SRE and DevSecOps — with diagrams, code and hands-on tasks.',
+    courseKey: 'learnweb.devops.progress.v1',
+    roadmapKey: 'learnweb.devops.roadmap.v1',
+    eventName: 'learnweb:progress:devops',
+    roadmapTitle: 'DevOps Roadmap',
+    roadmapDescription:
+      'A step-by-step path through DevOps: foundations and culture, CI/CD pipelines, infrastructure as code, containers and cloud delivery, and observability, reliability and security.',
+  },
+  devopsContent
 );
 
 const awsAiCourse = createCourse(
@@ -384,9 +422,262 @@ const awsScsCourse = createCourse(
   awsScsContent
 );
 
+const kubernetesCourse = createCourse(
+  {
+    id: 'kubernetes',
+    slug: 'kubernetes',
+    title: 'Kubernetes: Orchestration from Fundamentals to Production',
+    shortTitle: 'Kubernetes',
+    subtitle:
+      'Learn Kubernetes end to end — from the orchestration problem and cluster architecture to workloads, networking, storage, scaling, security and production operations.',
+    tech: 'Kubernetes',
+    category: 'Cloud / DevOps',
+    icon: 'kubernetes',
+    accent: '#326ce5',
+    soft: '#e7eefc',
+    level: 'Beginner → Advanced',
+    duration: '~35 hours',
+    status: 'available',
+    summary:
+      'A complete Kubernetes path: the declarative desired-state model and architecture, pods and controllers, Services/Ingress/DNS and the network model, ConfigMaps/Secrets, storage and PVs, resource management and autoscaling, and production operations (RBAC, observability, Helm and GitOps) — with manifests, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.k8s.progress.v1',
+    roadmapKey: 'learnweb.k8s.roadmap.v1',
+    eventName: 'learnweb:progress:k8s',
+    roadmapTitle: 'Kubernetes Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Kubernetes: fundamentals and architecture, workloads, networking and exposure, configuration/storage/scaling, and operations and production.',
+  },
+  kubernetesContent
+);
+
+const dockerCourse = createCourse(
+  {
+    id: 'docker',
+    slug: 'docker',
+    title: 'Docker: Containers from Zero to Production',
+    shortTitle: 'Docker',
+    subtitle:
+      'Master Docker end to end — from containers vs VMs and the Docker architecture to building images, volumes, networking, Compose and production-grade security.',
+    tech: 'Docker',
+    category: 'Cloud / DevOps',
+    icon: 'docker',
+    accent: '#2496ed',
+    soft: '#e6f4fd',
+    level: 'Beginner → Advanced',
+    duration: '~25 hours',
+    status: 'available',
+    summary:
+      'A complete Docker path: containers vs VMs and the client/daemon/registry architecture, writing Dockerfiles, layers and build cache, multi-stage builds, the container lifecycle, volumes and networking, registries, Docker Compose, and production security and CI/CD — with Dockerfiles, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.docker.progress.v1',
+    roadmapKey: 'learnweb.docker.roadmap.v1',
+    eventName: 'learnweb:progress:docker',
+    roadmapTitle: 'Docker Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Docker: fundamentals, building images, running and operating containers, data and networking, and Compose and production.',
+  },
+  dockerContent
+);
+
+const networkingCourse = createCourse(
+  {
+    id: 'networking',
+    slug: 'networking',
+    title: 'Computer Networking: From Cables to the Cloud',
+    shortTitle: 'Networking',
+    subtitle:
+      'Understand how networks really work — the OSI and TCP/IP models, IP addressing and routing, TCP/UDP, DNS, HTTP/HTTPS and TLS, plus tooling, troubleshooting and security.',
+    tech: 'Networking',
+    category: 'Fundamentals',
+    icon: 'network',
+    accent: '#0ea5e9',
+    soft: '#e3f5fd',
+    level: 'Beginner → Advanced',
+    duration: '~30 hours',
+    status: 'available',
+    summary:
+      'A complete networking path: what a network is, the OSI and TCP/IP models, Ethernet/MAC/ARP, IPv4/IPv6, subnets/CIDR/NAT, routing, TCP vs UDP, DNS and DHCP, HTTP/2 and HTTP/3, TLS and PKI, email/SSH protocols, CLI troubleshooting tools, firewalls/VPNs, and load balancers/CDNs — with diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.networking.progress.v1',
+    roadmapKey: 'learnweb.networking.roadmap.v1',
+    eventName: 'learnweb:progress:networking',
+    roadmapTitle: 'Computer Networking Roadmap',
+    roadmapDescription:
+      'A step-by-step path through networking: foundations and models, the lower layers (Ethernet, IP, routing), transport and core services (TCP/UDP, DNS, DHCP), the application layer and the web (HTTP, TLS), and operations and security.',
+  },
+  networkingContent
+);
+
+const linuxCourse = createCourse(
+  {
+    id: 'linux',
+    slug: 'linux',
+    title: 'Linux and the Command Line: From Shell to Server',
+    shortTitle: 'Linux',
+    subtitle:
+      'Become fluent on the Linux command line — the filesystem, files and text, pipes, permissions, processes, packages, systemd, networking and shell scripting.',
+    tech: 'Linux',
+    category: 'Fundamentals',
+    icon: 'linux',
+    accent: '#f59e0b',
+    soft: '#fff4e0',
+    level: 'Beginner → Advanced',
+    duration: '~30 hours',
+    status: 'available',
+    summary:
+      'A complete Linux path: the kernel and distributions, the shell and filesystem, managing files and text with grep/sed/awk, pipes and redirection, permissions and ownership, processes and packages, services and systemd, networking, disks, and Bash scripting, automation and hardening — with realistic commands, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.linux.progress.v1',
+    roadmapKey: 'learnweb.linux.roadmap.v1',
+    eventName: 'learnweb:progress:linux',
+    roadmapTitle: 'Linux Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Linux: fundamentals, files and text, permissions/processes/packages, system administration, and scripting and hardening.',
+  },
+  linuxContent
+);
+
+const gitCourse = createCourse(
+  {
+    id: 'git',
+    slug: 'git',
+    title: 'Git and GitHub: Version Control for Professionals',
+    shortTitle: 'Git & GitHub',
+    subtitle:
+      'Go from first commit to advanced workflows — staging and history, branching, merging and rebasing, remotes and pull requests, undoing changes, and professional best practices.',
+    tech: 'Git',
+    category: 'Fundamentals',
+    icon: 'git',
+    accent: '#f05133',
+    soft: '#fdeae6',
+    level: 'Beginner → Advanced',
+    duration: '~18 hours',
+    status: 'available',
+    summary:
+      'A complete Git and GitHub path: the distributed model and the three areas, reading history, branching and merging, rebase, remotes and pull requests, team workflows, undoing and rewriting history (reset/revert/stash/cherry-pick/reflog), tags and releases, and advanced topics (bisect, hooks, conventional commits, submodules, LFS) — with heavy command examples, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.git.progress.v1',
+    roadmapKey: 'learnweb.git.roadmap.v1',
+    eventName: 'learnweb:progress:git',
+    roadmapTitle: 'Git and GitHub Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Git: fundamentals, branching and integrating, remotes and collaboration, fixing and rewriting history, and advanced professional topics.',
+  },
+  gitContent
+);
+
+const javascriptCourse = createCourse(
+  {
+    id: 'javascript',
+    slug: 'javascript',
+    title: 'JavaScript: The Language from Fundamentals to Mastery',
+    shortTitle: 'JavaScript',
+    subtitle:
+      'Learn JavaScript properly — types and control flow, functions, scope and closures, objects and arrays, modern ES syntax, asynchronous code, the DOM and OOP.',
+    tech: 'JavaScript',
+    category: 'Languages',
+    icon: 'javascript',
+    accent: '#eab308',
+    soft: '#fef9c3',
+    level: 'Beginner → Advanced',
+    duration: '~35 hours',
+    status: 'available',
+    summary:
+      'A complete JavaScript path: how JS runs, variables and types, operators and control flow, functions, scope, hoisting and closures, the this keyword, objects and arrays, modern ES features, the event loop, Promises and async/await, fetch, the DOM and events, errors, and prototypes and classes — with code, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.javascript.progress.v1',
+    roadmapKey: 'learnweb.javascript.roadmap.v1',
+    eventName: 'learnweb:progress:javascript',
+    roadmapTitle: 'JavaScript Roadmap',
+    roadmapDescription:
+      'A step-by-step path through JavaScript: fundamentals, functions and scope, data and built-ins, modern and asynchronous JS, and the browser and OOP.',
+  },
+  javascriptContent
+);
+
+const typescriptCourse = createCourse(
+  {
+    id: 'typescript',
+    slug: 'typescript',
+    title: 'TypeScript: Typed JavaScript at Scale',
+    shortTitle: 'TypeScript',
+    subtitle:
+      'Add static types to JavaScript — basic and composite types, interfaces, unions and narrowing, generics, utility and advanced types, classes, and real-world tooling.',
+    tech: 'TypeScript',
+    category: 'Languages',
+    icon: 'typescript',
+    accent: '#3178c6',
+    soft: '#e6effa',
+    level: 'Beginner → Advanced',
+    duration: '~30 hours',
+    status: 'available',
+    summary:
+      'A complete TypeScript path: why TS and the compile step, basic types, functions, objects and interfaces, unions/literals/narrowing, enums and intersections, generics and constraints, utility types, advanced type tools (keyof, conditional and mapped types), classes and OOP, type guards, tsconfig and strict mode, declaration files and @types, and TS with Node and React — with code, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.typescript.progress.v1',
+    roadmapKey: 'learnweb.typescript.roadmap.v1',
+    eventName: 'learnweb:progress:typescript',
+    roadmapTitle: 'TypeScript Roadmap',
+    roadmapDescription:
+      'A step-by-step path through TypeScript: fundamentals, object and composite types, generics and advanced types, classes and OOP, and tooling and real-world TypeScript.',
+  },
+  typescriptContent
+);
+
+const nodejsCourse = createCourse(
+  {
+    id: 'nodejs',
+    slug: 'nodejs',
+    title: 'Node.js: Server-Side JavaScript from Fundamentals to Production',
+    shortTitle: 'Node.js',
+    subtitle:
+      'Run JavaScript on the server — the runtime and event loop, modules, core modules, building HTTP servers, async patterns, npm and the ecosystem, and production.',
+    tech: 'Node.js',
+    category: 'Backend',
+    icon: 'node',
+    accent: '#3c873a',
+    soft: '#e7f3e7',
+    level: 'Beginner → Advanced',
+    duration: '~30 hours',
+    status: 'available',
+    summary:
+      'A complete Node.js path: the V8 + libuv runtime, modules (CommonJS and ESM), the event loop and non-blocking I/O, the file system, events and streams, process and globals, the http module, asynchronous patterns and error handling, npm and package.json, configuration and environment, databases and APIs, performance and scaling, and debugging, testing and deployment — with code, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.nodejs.progress.v1',
+    roadmapKey: 'learnweb.nodejs.roadmap.v1',
+    eventName: 'learnweb:progress:nodejs',
+    roadmapTitle: 'Node.js Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Node.js: fundamentals, core modules, building servers and async, npm and the ecosystem, and production Node.',
+  },
+  nodejsContent
+);
+
+const expressCourse = createCourse(
+  {
+    id: 'express',
+    slug: 'express',
+    title: 'Express: Building Web APIs and Apps with Node.js',
+    shortTitle: 'Express',
+    subtitle:
+      'Build web servers and REST APIs with Express — routing, the request/response cycle, middleware, REST design, auth, templating and uploads, and production concerns.',
+    tech: 'Express',
+    category: 'Backend',
+    icon: 'express',
+    accent: '#1f2937',
+    soft: '#eef1f5',
+    level: 'Beginner → Advanced',
+    duration: '~22 hours',
+    status: 'available',
+    summary:
+      'A complete Express path: a minimal server over Node http, routing and route parameters, the request and response objects, the middleware pipeline, built-in and third-party middleware, error-handling middleware, RESTful API design, working with data and databases, structuring an app, authentication and sessions, templating and static files, file uploads and cookies, and production security, performance, testing and deployment — with code, diagrams, quizzes and tasks.',
+    courseKey: 'learnweb.express.progress.v1',
+    roadmapKey: 'learnweb.express.roadmap.v1',
+    eventName: 'learnweb:progress:express',
+    roadmapTitle: 'Express Roadmap',
+    roadmapDescription:
+      'A step-by-step path through Express: fundamentals, middleware, building REST APIs, auth/views/uploads, and production Express.',
+  },
+  expressContent
+);
+
 export const courses = [
   reactCourse,
   nestCourse,
+  devopsCourse,
   awsCourse,
   awsAiCourse,
   awsSaaCourse,
@@ -398,6 +689,15 @@ export const courses = [
   awsDopCourse,
   awsAnsCourse,
   awsScsCourse,
+  dockerCourse,
+  kubernetesCourse,
+  networkingCourse,
+  linuxCourse,
+  gitCourse,
+  javascriptCourse,
+  typescriptCourse,
+  nodejsCourse,
+  expressCourse,
 ];
 
 export const DEFAULT_COURSE_ID = 'react';

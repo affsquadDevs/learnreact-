@@ -37,6 +37,23 @@ const ROUTES = [
     { url: `/course/${id}`, key: `/course/${id}`, out: `dist/course/${id}.html`, lastmod: STATIC_DATE },
     { url: `/roadmap/${id}`, key: `/roadmap/${id}`, out: `dist/roadmap/${id}.html`, lastmod: STATIC_DATE },
   ]),
+  // Standalone tech courses (Docker, Kubernetes, DevOps, Networking, Linux, Git).
+  // Keep in sync with the registry in src/data/courses/index.js and meta in src/seo.js.
+  ...[
+    'docker',
+    'kubernetes',
+    'devops',
+    'networking',
+    'linux',
+    'git',
+    'javascript',
+    'typescript',
+    'nodejs',
+    'express',
+  ].flatMap((id) => [
+    { url: `/course/${id}`, key: `/course/${id}`, out: `dist/course/${id}.html`, lastmod: STATIC_DATE },
+    { url: `/roadmap/${id}`, key: `/roadmap/${id}`, out: `dist/roadmap/${id}.html`, lastmod: STATIC_DATE },
+  ]),
   { url: '/about', key: '/about', out: 'dist/about.html', lastmod: STATIC_DATE },
   { url: '/contact', key: '/contact', out: 'dist/contact.html', lastmod: STATIC_DATE },
   { url: '/privacy', key: '/privacy', out: 'dist/privacy.html', lastmod: STATIC_DATE },

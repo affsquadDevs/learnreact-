@@ -156,6 +156,112 @@ for (const c of awsCerts) {
   };
 }
 
+// Standalone tech courses (added in bulk). Both the course and roadmap pages are
+// indexable — each is unique, original content. Keep this list in sync with the
+// registry in src/data/courses/index.js and the routes in prerender.mjs.
+const techCourses = [
+  {
+    id: 'docker',
+    title: 'Docker Course — Containers from Zero to Production | DevWay',
+    course:
+      'Learn Docker end to end: containers vs VMs, the Docker architecture, writing Dockerfiles, image layers and the build cache, multi-stage builds, the container lifecycle, volumes and networking, registries, Docker Compose, and production security and CI/CD — with Dockerfiles, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Docker Roadmap — From Containers to Production | DevWay',
+    roadmap:
+      'fundamentals, building images, running and operating containers, data and networking, and Compose and production',
+  },
+  {
+    id: 'kubernetes',
+    title: 'Kubernetes Course — Orchestration to Production | DevWay',
+    course:
+      'Learn Kubernetes end to end: the declarative desired-state model and cluster architecture, pods and controllers, Services, Ingress and DNS, ConfigMaps and Secrets, storage and persistent volumes, resource management and autoscaling, and production operations with RBAC, observability, Helm and GitOps — with manifests, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Kubernetes Roadmap — Fundamentals to Production | DevWay',
+    roadmap:
+      'fundamentals and architecture, workloads, networking and exposure, configuration/storage/scaling, and operations and production',
+  },
+  {
+    id: 'devops',
+    title: 'DevOps Course — CI/CD, IaC and Reliability | DevWay',
+    course:
+      'Learn DevOps end to end: culture and DORA metrics, continuous integration and delivery, infrastructure as code with Terraform and Ansible, containers and Kubernetes, and observability, SRE and DevSecOps — with diagrams, code and hands-on tasks.',
+    roadmapTitle: 'DevOps Roadmap — Culture to Reliability | DevWay',
+    roadmap:
+      'foundations and culture, CI/CD pipelines, infrastructure as code, containers and cloud delivery, and observability, reliability and security',
+  },
+  {
+    id: 'networking',
+    title: 'Computer Networking Course — Cables to the Cloud | DevWay',
+    course:
+      'Learn how networks really work: the OSI and TCP/IP models, Ethernet/MAC/ARP, IPv4/IPv6, subnets, CIDR and NAT, routing, TCP vs UDP, DNS and DHCP, HTTP/2 and HTTP/3, TLS and PKI, email and SSH protocols, CLI troubleshooting, firewalls and VPNs, and load balancers and CDNs — with diagrams, quizzes and tasks.',
+    roadmapTitle: 'Computer Networking Roadmap — Step by Step | DevWay',
+    roadmap:
+      'foundations and models, the lower layers, transport and core services, the application layer and the web, and operations and security',
+  },
+  {
+    id: 'linux',
+    title: 'Linux & Command Line Course — Shell to Server | DevWay',
+    course:
+      'Become fluent on the Linux command line: the kernel and distributions, the shell and filesystem, files and text with grep/sed/awk, pipes and redirection, permissions and ownership, processes and packages, services and systemd, networking, disks, and Bash scripting, automation and hardening — with realistic commands, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Linux Roadmap — From Shell to Server | DevWay',
+    roadmap:
+      'fundamentals, files and text, permissions/processes/packages, system administration, and scripting and hardening',
+  },
+  {
+    id: 'git',
+    title: 'Git & GitHub Course — Version Control for Pros | DevWay',
+    course:
+      'Master Git and GitHub: the distributed model and the three areas, reading history, branching, merging and rebasing, remotes and pull requests, team workflows, undoing and rewriting history, tags and releases, and advanced topics like bisect, hooks, conventional commits, submodules and LFS — with command examples, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Git & GitHub Roadmap — Step by Step | DevWay',
+    roadmap:
+      'fundamentals, branching and integrating, remotes and collaboration, fixing and rewriting history, and advanced professional topics',
+  },
+  {
+    id: 'javascript',
+    title: 'JavaScript Course — Fundamentals to Mastery | DevWay',
+    course:
+      'Learn JavaScript properly: how JS runs, variables and types, operators and control flow, functions, scope, hoisting and closures, the this keyword, objects and arrays, modern ES syntax, the event loop, Promises and async/await, fetch, the DOM and events, error handling, and prototypes and classes — with code, diagrams, quizzes and tasks.',
+    roadmapTitle: 'JavaScript Roadmap — Step by Step | DevWay',
+    roadmap:
+      'fundamentals, functions and scope, data and built-ins, modern and asynchronous JavaScript, and the browser and OOP',
+  },
+  {
+    id: 'typescript',
+    title: 'TypeScript Course — Typed JavaScript at Scale | DevWay',
+    course:
+      'Learn TypeScript: why TS and the compile step, basic and composite types, interfaces, unions/literals/narrowing, enums, generics and constraints, utility types, advanced type tools like keyof and conditional and mapped types, classes and OOP, type guards, tsconfig and strict mode, declaration files and @types, and TS with Node and React — with code, diagrams, quizzes and tasks.',
+    roadmapTitle: 'TypeScript Roadmap — Step by Step | DevWay',
+    roadmap:
+      'fundamentals, object and composite types, generics and advanced types, classes and OOP, and tooling and real-world TypeScript',
+  },
+  {
+    id: 'nodejs',
+    title: 'Node.js Course — Server-Side JavaScript | DevWay',
+    course:
+      'Learn Node.js end to end: the V8 and libuv runtime, modules (CommonJS and ESM), the event loop and non-blocking I/O, the file system, events and streams, process and globals, the http module, async patterns and error handling, npm and package.json, configuration and environment, databases and APIs, performance and scaling, and debugging, testing and deployment — with code, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Node.js Roadmap — Fundamentals to Production | DevWay',
+    roadmap:
+      'fundamentals, core modules, building servers and async, npm and the ecosystem, and production Node.js',
+  },
+  {
+    id: 'express',
+    title: 'Express Course — Build Web APIs with Node.js | DevWay',
+    course:
+      'Learn Express: a minimal server over Node http, routing and route parameters, the request and response objects, the middleware pipeline, built-in and third-party middleware, error-handling middleware, RESTful API design, working with data and databases, structuring an app, authentication and sessions, templating and uploads, and production security, performance, testing and deployment — with code, diagrams, quizzes and tasks.',
+    roadmapTitle: 'Express Roadmap — Fundamentals to Production | DevWay',
+    roadmap:
+      'fundamentals, middleware, building REST APIs, auth/views/uploads, and production Express',
+  },
+];
+for (const c of techCourses) {
+  routeMeta[`/course/${c.id}`] = {
+    title: c.title,
+    description: c.course,
+  };
+  routeMeta[`/roadmap/${c.id}`] = {
+    title: c.roadmapTitle,
+    description: `A step-by-step roadmap covering ${c.roadmap}.`,
+  };
+}
+
 // Blog index + one entry per article (keeps client titles and prerendered <head> in sync).
 routeMeta['/blog'] = {
   title: 'React Articles & Guides | DevWay',
