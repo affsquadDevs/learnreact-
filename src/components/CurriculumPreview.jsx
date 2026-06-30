@@ -6,17 +6,14 @@ import { useProgress } from '../hooks/useProgress';
 import { fadeUp, stagger, viewport, easeOut } from '../lib/motion';
 import styles from './CurriculumPreview.module.css';
 
-const MotionLink = motion.create(Link);
-
 function CourseMiniCard({ course }) {
   const { percent, completedCount, total } = useProgress(course);
   const started = completedCount > 0;
 
   return (
-    <MotionLink
+    <Link
       to={`/course/${course.id}`}
       className={styles.card}
-      variants={fadeUp}
       style={{ '--accent': course.accent }}
     >
       <div className={styles.cardTop}>
@@ -39,7 +36,7 @@ function CourseMiniCard({ course }) {
       <span className={styles.pctLabel}>
         {started ? `${percent}% · ${completedCount}/${total} lessons` : `${total} lessons · not started`}
       </span>
-    </MotionLink>
+    </Link>
   );
 }
 
@@ -65,18 +62,17 @@ export default function CurriculumPreview() {
         </motion.p>
       </motion.div>
 
-      <motion.div
+      {/* Plain grid: each card self-animates on its own whileInView. Gating the whole
+          (very tall) grid behind one whileInView never met the viewport threshold, so
+          all cards stayed at opacity:0 — leaving a huge empty gap. */}
+      <div
         className={`container ${styles.grid}`}
         style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', maxWidth: 840 }}
-        variants={stagger(0.1)}
-        initial="hidden"
-        whileInView="show"
-        viewport={viewport}
       >
         {courses.map((c) => (
           <CourseMiniCard key={c.id} course={c} />
         ))}
-      </motion.div>
+      </div>
 
       <div className={`container ${styles.ctaRow}`}>
         <Link className="btn btn-primary" to="/courses">
