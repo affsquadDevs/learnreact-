@@ -3,7 +3,7 @@
 // route's HTML, and by ScrollToTop (src/App.jsx) to update document.title on SPA nav.
 import { articles } from './content/articles/manifest.js';
 
-export const SITE = 'https://learn-react.com';
+export const SITE = 'https://dev-way.com';
 
 export const routeMeta = {
   '/': {

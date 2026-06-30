@@ -116,7 +116,7 @@ export default function Privacy() {
         a complaint with a supervisory authority. If you are a California resident, you have rights
         under the CCPA/CPRA, including the right to know, delete, and opt out of the "sale" or
         "sharing" of personal information. We do not sell personal information for money. To exercise
-        any right, contact us at <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>.
+        any right, contact us at <a href="mailto:hello@dev-way.com">hello@dev-way.com</a>.
       </p>
 
       <h2>8. Data retention</h2>
@@ -157,7 +157,7 @@ export default function Privacy() {
       </p>
       <address>
         DevWay<br />
-        Email: <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>
+        Email: <a href="mailto:hello@dev-way.com">hello@dev-way.com</a>
       </address>
     </PageShell>
   );

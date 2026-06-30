@@ -79,8 +79,8 @@ export default function Roadmap() {
               '@context': 'https://schema.org',
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://learn-react.com/' },
-                { '@type': 'ListItem', position: 2, name: 'Roadmap', item: 'https://learn-react.com/roadmap' },
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dev-way.com/' },
+                { '@type': 'ListItem', position: 2, name: 'Roadmap', item: 'https://dev-way.com/roadmap' },
               ],
             }),
           }}

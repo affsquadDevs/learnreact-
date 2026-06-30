@@ -78,7 +78,7 @@ export default function Terms() {
       <h2>10. Contact</h2>
       <p>
         Questions about these Terms? Email{' '}
-        <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>.
+        <a href="mailto:hello@dev-way.com">hello@dev-way.com</a>.
       </p>
     </PageShell>
   );

@@ -86,11 +86,13 @@
   margin-bottom: 8px;
 }
 
-.article a {
+/* Prose links only — exclude .btn so button styling (e.g. the white-on-blue
+   "Email us" button) isn't overridden to blue-on-blue. */
+.article a:not(:global(.btn)) {
   color: var(--c-blue);
   text-decoration: underline;
 }
-.article a:hover {
+.article a:not(:global(.btn)):hover {
   color: var(--c-blue-dark);
 }
 

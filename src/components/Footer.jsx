@@ -30,14 +30,6 @@ const cols = [
   },
 ];
 
-// TODO: swap these for DevWay's real social profile URLs.
-const socials = [
-  { label: 'GitHub', short: 'Gh', href: 'https://github.com' },
-  { label: 'X (Twitter)', short: 'X', href: 'https://x.com' },
-  { label: 'LinkedIn', short: 'in', href: 'https://linkedin.com' },
-  { label: 'YouTube', short: 'Yt', href: 'https://youtube.com' },
-];
-
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -45,19 +37,6 @@ export default function Footer() {
         <div className={styles.brandCol}>
           <Logo onDark />
           <p>Learn web development in a structured way, across frontend, backend and the cloud — with practice and progress tracking.</p>
-          <div className={styles.socials}>
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                aria-label={`DevWay on ${s.label}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {s.short}
-              </a>
-            ))}
-          </div>
         </div>
 
         {cols.map((c) => (

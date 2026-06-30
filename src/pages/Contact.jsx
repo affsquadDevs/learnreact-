@@ -12,7 +12,7 @@ export default function Contact() {
         days.
       </p>
       <p>
-        <a href="mailto:hello@learn-react.com">hello@learn-react.com</a>
+        <a href="mailto:hello@dev-way.com">hello@dev-way.com</a>
       </p>
 
       <h2>What to contact us about</h2>
@@ -30,7 +30,7 @@ export default function Contact() {
         message data is sent or stored by this website.)
       </p>
       <p>
-        <a className="btn btn-primary" href="mailto:hello@learn-react.com?subject=DevWay%20enquiry">
+        <a className="btn btn-primary" href="mailto:hello@dev-way.com?subject=DevWay%20enquiry">
           Email the DevWay team
         </a>
       </p>
